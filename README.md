@@ -1,6 +1,6 @@
 # syntax_sugar
 
-This lib adds some syntax sugar to Python.
+This lib adds some syntactic sugar to Python.
 
 NOTE: This is merely a prototype. Everything is evolving.
 
@@ -23,6 +23,10 @@ from syntax_sugar import *
 pipe(10) | range | each(lambda x: x ** 2) | print
 # output: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
 
+# save the result to a var
+x = pipe(10) | range | each(lambda x: x ** 2) | dump
+# remember to append dump at the end, so the pipe will know you want to dump the value
+
 # wanna write to a file? Why not!
 pipe(10) | range | (map, str) | concat > 'test.txt'
 # write "0123456789" to test.txt
@@ -41,6 +45,7 @@ pipe(10) | range | (map, str) | concat > 'test.txt'
 # Python's nasty range() is right-exclusive. This is right-inclusive.
 
 '0' /to/ '9'
+# we can also have a range of strings :)
 # '0123456789'
 
 # make your own infix functions
@@ -53,11 +58,46 @@ def plus(a, b):
 ```
 
 ### composable function
+
+In math, `(f * g) (x) = f(g(x))`. This is called function composition.
+
 ``` python
+# this transfer a map object to list
 lmap = compose(list, map)
 # lmap equivalent to `list(map(...))`
 lmap(lambda x: x ** 2, range(10))
+```
 
+Let's try some math.
+```
+f(x) = x^2 + 1
+g(x) = 2x - 1
+h(x) = -2x^3 + 3
+```
+We want to represent `f * g * h` in a program, i.e. `fn(x) = f(g(h(x)))`
+``` python
+f = lambda x: x**2 + 1
+g = lambda x: 2*x - 1
+h = lambda x: -2 * x**3 + 3
+
+fn = compose(f, g, h)
+
+fn(5) # 245026
+```
+or you can do
+```python
+f = composable(lambda x: x**2 + 1)
+g = composable(lambda x: 2*x - 1)
+h = composable(lambda x: -2 * x**3 + 3)
+
+fn = f * g * h
+
+fn(5) # 245026
+```
+
+Some times you may prefer the decorator way.
+
+``` python
 # make your own composable functions
 @composable
 def add2(x):

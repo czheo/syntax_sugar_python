@@ -32,8 +32,13 @@ pipe(10) | range | (map, str) | concat > 'test.txt'
 ``` python
 1 /of/ int
 # equivalent to `isinstance(1, int)`
+
 [1,2,3,4,5] /contains/ 3
 # equivalent to `3 in [1,2,3,4,5]`
+
+1 /to/ 10
+# equivalent to `range(1, 11)`
+# Python's nasty range() is right-exclusive. This is right-inclusive.
 
 # make your own infix functions
 @infix

@@ -3,6 +3,7 @@ from .composable import compose
 
 __all__ = [
     'ret',
+    'dump',
     'pipe',
     'each',
     'where',

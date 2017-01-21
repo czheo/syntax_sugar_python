@@ -22,14 +22,26 @@ from syntax_sugar import *
 # put 10 into the pipe and just let data flow.
 pipe(10) | range | each(lambda x: x ** 2) | print
 # output: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+# wanna write to a file? Why not!
+pipe(10) | range | (map, str) | concat > 'test.txt'
+# write "0123456789" to test.txt
 ```
 
 ### infix function
 ``` python
 1 /of/ int
 # equivalent to `isinstance(1, int)`
+
 [1,2,3,4,5] /contains/ 3
 # equivalent to `3 in [1,2,3,4,5]`
+
+1 /to/ 10
+# equivalent to `range(1, 11)`
+# Python's nasty range() is right-exclusive. This is right-inclusive.
+
+'0' /to/ '9'
+# '0123456789'
 
 # make your own infix functions
 @infix

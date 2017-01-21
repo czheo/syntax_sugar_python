@@ -69,7 +69,7 @@ lmap(lambda x: x ** 2, range(10))
 ```
 
 Let's try some math.
-``` python
+```
 f(x) = x^2 + 1
 g(x) = 2x - 1
 h(x) = -2x^3 + 3

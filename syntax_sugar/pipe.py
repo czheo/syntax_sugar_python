@@ -8,9 +8,11 @@ __all__ = [
     'where',
     'concat',
     'puts',
+    'read',
+    'readlines',
 ]
 
-ret = None
+dump, ret = None, None
 
 def puts(data):
     print(data, end='')
@@ -25,11 +27,18 @@ def where(fn):
 def concat(lst):
     return ''.join(lst)
 
+def read(fd):
+    return fd.read()
+
+def readlines(fd):
+    return fd.readlines()
+
 class pipe:
     def __init__(self, data = None):
         self.data = data
 
     def __or__(self, right):
+        "pipe | action"
         if right is ret:
             return self.data
         elif isinstance(right, tuple):
@@ -46,3 +55,13 @@ class pipe:
             return pipe(right)
         else:
             raise TypeError(right)
+
+    def __gt__(self, right):
+        "pipe > 'filename'"
+        with open(right, 'w') as f:
+            f.write(str(self.data))
+    
+    def __rshift__(self, right):
+        "pipe >> 'filename'"
+        with open(right, 'a') as f:
+            f.write(str(self.data))

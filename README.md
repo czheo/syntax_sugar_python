@@ -69,13 +69,13 @@ lmap(lambda x: x ** 2, range(10))
 ```
 
 Let's try some math.
-```
+``` python
 f(x) = x^2 + 1
 g(x) = 2x - 1
 h(x) = -2x^3 + 3
 ```
-We want to represent `f * g * h` in a program
-```
+We want to represent `f * g * h` in a program, i.e. `fn(x) = f(g(h(x)))`
+``` python
 f = lambda x: x**2 + 1
 g = lambda x: 2*x - 1
 h = lambda x: -2 * x**3 + 3
@@ -85,7 +85,7 @@ fn = compose(f, g, h)
 fn(5) # 245026
 ```
 or you can do
-```
+```python
 f = composable(lambda x: x**2 + 1)
 g = composable(lambda x: 2*x - 1)
 h = composable(lambda x: -2 * x**3 + 3)
@@ -97,7 +97,7 @@ fn(5) # 245026
 
 Some times you may prefer the decorator way.
 
-```
+``` python
 # make your own composable functions
 @composable
 def add2(x):

@@ -23,6 +23,10 @@ from syntax_sugar import *
 pipe(10) | range | each(lambda x: x ** 2) | print
 # output: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
 
+# save the result to a var
+x = pipe(10) | range | each(lambda x: x ** 2) | dump
+# remember to append dump at the end, so the pipe will know you want to dump the value
+
 # wanna write to a file? Why not!
 pipe(10) | range | (map, str) | concat > 'test.txt'
 # write "0123456789" to test.txt

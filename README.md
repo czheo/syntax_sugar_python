@@ -41,6 +41,7 @@ pipe(10) | range | (map, str) | concat > 'test.txt'
 # Python's nasty range() is right-exclusive. This is right-inclusive.
 
 '0' /to/ '9'
+# we can also have a range of a string :)
 # '0123456789'
 
 # make your own infix functions

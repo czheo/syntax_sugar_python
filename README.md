@@ -4,6 +4,17 @@
 
 Inspired by https://github.com/matz/streem. 
 
+# Install
+```
+pip install syntax_sugar
+```
+
+# Usage
+This is the only line you need to use this lib.
+```
+from syntax_sugar import *
+```
+
 ### pipe
 ``` python
 # put 10 into the pipe and just let data flow.

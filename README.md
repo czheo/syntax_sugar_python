@@ -1,6 +1,8 @@
 # syntax_sugar
 
-`from syntax_sugar import *` adds pretty sweet sugar to Python. NOTE: This is merely a prototype. Everything is evolving.
+This lib adds some syntax sugar to Python.
+
+NOTE: This is merely a prototype. Everything is evolving.
 
 Inspired by https://github.com/matz/streem. 
 

@@ -1,6 +1,6 @@
 # syntax_sugar
 
-This lib adds some syntax sugar to Python.
+This lib adds some syntactic sugar to Python.
 
 NOTE: This is merely a prototype. Everything is evolving.
 

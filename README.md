@@ -39,15 +39,15 @@ You can have a function running in a seperate thread with pipe. Just put it in a
 Because of the notorious GIL(Global Interpret Lock) of Python, people may want processes instead of threads. Just put a function in `p[]`.
 
 ``` python
-pipe(10) | [puts]   # puts run in a thread
-pipe(10) | t[puts]  # puts run in a thread
-pipe(10) | p[puts]  # puts run in a process
+pipe(10) | [print]   # print run in a thread
+pipe(10) | t[print]  # print run in a thread
+pipe(10) | p[print]  # print run in a process
 ```
 
-What makes this syntax even better is that you can specify how many threads you want to spawn, by doing `[function] * n` where `n` is the number of threads.
+What makes this syntax good is that you can specify how many threads you want to spawn, by doing `[function] * n` where `n` is the number of threads.
 
 ``` python
-pipe([1,2,3,4,5]) | [puts] * 3  # puts will run in a ThreadPool of size 3
+pipe([1,2,3,4,5]) | [print] * 3  # puts will run in a ThreadPool of size 3
 ```
 
 Here is an example of requesting a list of urls in parrallel

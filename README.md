@@ -47,7 +47,7 @@ pipe(10) | p[print]  # print run in a process
 What makes this syntax good is that you can specify how many threads you want to spawn, by doing `[function] * n` where `n` is the number of threads.
 
 ``` python
-pipe([1,2,3,4,5]) | [print] * 3  # puts will run in a ThreadPool of size 3
+pipe([1,2,3,4,5]) | [print] * 3  # print will run in a ThreadPool of size 3
 ```
 
 Here is an example of requesting a list of urls in parrallel

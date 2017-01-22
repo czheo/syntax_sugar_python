@@ -2,7 +2,7 @@
 
 This lib adds some syntactic sugar to Python.
 
-NOTE: This is merely a prototype. Everything is evolving.
+NOTE: This is merely a prototype. Only tested under Python 3.6.0. Everything is evolving.
 
 Inspired by https://github.com/matz/streem. 
 

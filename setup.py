@@ -9,4 +9,7 @@ setup(
     license="MIT",
     keywords="syntax, functional",
     packages=find_packages(),
+    install_requires=[
+        'multiprocess',
+    ],
 )

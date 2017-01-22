@@ -1,7 +1,6 @@
 from functools import partial
 from .composable import compose
-from multiprocessing import Pool
-from multiprocessing.pool import ThreadPool
+from multiprocess.pool import ThreadPool, Pool
 
 __all__ = [
     'dump',
@@ -39,7 +38,7 @@ class dump:
     "mark end of pipe"
     pass
 
-class MultiProcess():
+class MultiTask:
     def __init__(self, func):
         self.poolsize = 1
         self.func = func
@@ -47,7 +46,10 @@ class MultiProcess():
         self.poolsize = other
         return self
 
-class MultiThread(MultiProcess):
+class MultiProcess(MultiTask):
+    pass
+
+class MultiThread(MultiTask):
     pass
 
 class ProcessSyntax:
@@ -80,11 +82,17 @@ class pipe:
 
     def multiprocess(self, func, poolsize):
         p = Pool(poolsize)
-        self.data = p.map(func, self.data)
+        if poolsize == 1:
+            self.data = p.map(func, [self.data])
+        else:
+            self.data = p.map(func, self.data)
 
     def multithread(self, func, poolsize):
-        p = Pool(poolsize)
-        self.data = p.map(func, self.data)
+        p = ThreadPool(poolsize)
+        if poolsize == 1:
+            self.data = p.map(func, [self.data])
+        else:
+            self.data = p.map(func, self.data)
 
     def function(self, left):
         self.data = left(self.data)

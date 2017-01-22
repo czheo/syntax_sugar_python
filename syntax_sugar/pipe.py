@@ -65,10 +65,7 @@ t = ThreadSyntax()
 
 class pipe:
     def __init__(self, data = None):
-        if data is None:
-            self.pipein = False
-        else:
-            self.pipein = True
+        self.pipein = data is not None
         self.data = data
 
     def start(self, left):
@@ -82,17 +79,11 @@ class pipe:
 
     def multiprocess(self, func, poolsize):
         p = Pool(poolsize)
-        if poolsize == 1:
-            self.data = p.map(func, [self.data])
-        else:
-            self.data = p.map(func, self.data)
+        self.data = p.map(func, [self.data] if poolsize == 1 else self.data)
 
     def multithread(self, func, poolsize):
         p = ThreadPool(poolsize)
-        if poolsize == 1:
-            self.data = p.map(func, [self.data])
-        else:
-            self.data = p.map(func, self.data)
+        self.data = p.map(func, [self.data] if poolsize == 1 else self.data)
 
     def function(self, left):
         self.data = left(self.data)

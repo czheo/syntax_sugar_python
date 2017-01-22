@@ -24,12 +24,50 @@ pipe(10) | range | each(lambda x: x ** 2) | print
 # output: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
 
 # save the result to a var
-x = pipe(10) | range | each(lambda x: x ** 2) | dump
-# remember to append dump at the end, so the pipe will know you want to dump the value
+x = pipe(10) | range | each(lambda x: x ** 2) | dump()
+# remember to call dump at the end, so the pipe will know you want to dump the value
 
 # wanna write to a file? Why not!
 pipe(10) | range | (map, str) | concat > 'test.txt'
 # write "0123456789" to test.txt
+```
+
+### pipe with thread/process and multiprocessing
+
+You can have a function running in a seperate thread with pipe. Just put it in a `[]` or more explicitly `t[]`.
+
+Because of the notorious GIL(Global Interpret Lock) of Python, people may want processes instead of threads. Just put a function in `p[]`.
+
+``` python
+pipe(10) | [puts]   # puts run in a thread
+pipe(10) | t[puts]  # puts run in a thread
+pipe(10) | p[puts]  # puts run in a process
+```
+
+What makes this syntax even better is that you can specify how many threads you want to spawn, by doing `[function] * n` where `n` is the number of threads.
+
+``` python
+pipe([1,2,3,4,5]) | [puts] * 3  # puts will run in a ThreadPool of size 3
+```
+
+Here is an example of requesting a list of urls in parrallel
+
+``` python
+import requests
+(
+(pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
+    | each(lambda name: 'http://' + name + '.com')
+    | [requests.get] * 3   # !! `requests.get` runs in a ThreadPool of size 3
+    | each(lambda resp: (resp.url, resp.headers.get('Server')))
+    | dump())
+)
+
+# returns
+# [('http://www.google.com/', 'gws'),
+#  ('https://twitter.com/', 'tsa_a'),
+#  ('https://www.yahoo.com/', 'ATS'),
+#  ('https://www.facebook.com/', None),
+#  ('https://github.com/', 'GitHub.com')]
 ```
 
 ### infix function

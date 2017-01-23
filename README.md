@@ -1,8 +1,8 @@
-# syntax_sugar ![travis_status](https://travis-ci.org/czheo/syntax_sugar_python.svg?branch=master)
+# syntax_sugar [![travis_status](https://travis-ci.org/czheo/syntax_sugar_python.svg?branch=master)](https://travis-ci.org/czheo/syntax_sugar_python)
 
 This lib adds some syntactic sugar to Python.
 
-NOTE: This is merely a prototype. Only tested under Python 3.6.0. Everything is evolving.
+NOTE: This is merely an experimental prototype to show some potential of operator overloading in Python. Only tested under Python 3.6.0. Anything may evolve without announcement in advance.
 
 Inspired by https://github.com/matz/streem. 
 
@@ -55,11 +55,11 @@ Here is an example of requesting a list of urls in parrallel
 ``` python
 import requests
 (
-(pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
+pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
     | each(lambda name: 'http://' + name + '.com')
     | [requests.get] * 3   # !! `requests.get` runs in a ThreadPool of size 3
     | each(lambda resp: (resp.url, resp.headers.get('Server')))
-    | dump())
+    | dump()
 )
 
 # returns
@@ -75,9 +75,6 @@ import requests
 1 /of/ int
 # equivalent to `isinstance(1, int)`
 
-[1,2,3,4,5] /contains/ 3
-# equivalent to `3 in [1,2,3,4,5]`
-
 1 /to/ 10
 # equivalent to `range(1, 11)`
 # Python's nasty range() is right-exclusive. This is right-inclusive.
@@ -88,11 +85,12 @@ import requests
 
 # make your own infix functions
 @infix
-def plus(a, b):
-    return a + b
+def push(lst, x):
+    lst.append(x)
+    return lst
 
-1 /plus/ 2
-# returns 3
+[] /push/ 1 /push/ 2 /push/ 3
+# returns [1,2,3]
 ```
 
 ### composable function
@@ -106,13 +104,8 @@ lmap = compose(list, map)
 lmap(lambda x: x ** 2, range(10))
 ```
 
-Let's try some math.
-```
-f(x) = x^2 + 1
-g(x) = 2x - 1
-h(x) = -2x^3 + 3
-```
-We want to represent `f * g * h` in a program, i.e. `fn(x) = f(g(h(x)))`
+Let's say we want to represent `f * g * h` in a program, i.e. `fn(x) = f(g(h(x)))`
+
 ``` python
 f = lambda x: x**2 + 1
 g = lambda x: 2*x - 1

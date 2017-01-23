@@ -76,14 +76,36 @@ pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
 # equivalent to `isinstance(1, int)`
 
 1 /to/ 10
-# equivalent to `range(1, 11)`
+# similar to `range(1, 11)`,  but this is an iterator.
 # Python's nasty range() is right-exclusive. This is right-inclusive.
 
 '0' /to/ '9'
+# similar to '0123456789', but this is an iterator.
 # we can also have a range of characters :)
-# '0123456789'
+```
 
-# make your own infix functions
+`/to/` has some advanced features
+
+- lazy evaluation.
+- support infinity.
+- support product operation.
+
+``` python
+# CAUTION: this will infinitely print numbers
+for i in 1 /to/ INF:
+    print(i)
+
+print(1 /to/ INF /take/ 5)
+# there is a `take` funciton which is similar to itertools.islice
+# return [1, 2, 3, 4, 5]
+
+# print all combinations of [1..3] * [4..6]
+print([(x, y) for x, y in (1 /to/ 3) * (4 /to/ 6)])
+# return [(1, 4), (1, 5), (1, 6), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6)]
+```
+
+Make your own infix function, so you can append multiple items to a list in one line.
+``` python
 @infix
 def push(lst, x):
     lst.append(x)

@@ -115,6 +115,23 @@ def push(lst, x):
 # returns [1,2,3]
 ```
 
+### lazy pipe
+
+Because our `pipe` is quite hard working, it doesn't work well with the lazy `/to/` function. 
+
+`lazy_pipe` works in a "one-by-one" manner. It puts only 1 item into the pipe at each time.
+
+``` python
+lazy_pipe(1 /to/ INF) | print | when(lambda x: x < 10)
+# this prints 1 to 9
+
+lazy_pipe(input) | print | when(lambda x: x != "")
+# lazy_pipe also accepts a function as input. The function is called each time as long as the `when` condition holds.
+# this echos anything you input
+```
+
+TODO: support multiprocessing with lazy pipe
+
 ### composable function
 
 In math, `(f * g) (x) = f(g(x))`. This is called function composition.

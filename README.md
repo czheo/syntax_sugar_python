@@ -125,9 +125,9 @@ Because our `pipe` is quite hard working, it doesn't work well with the lazy `/t
 lazy_pipe(1 /to/ INF) | print | when(lambda x: x < 10)
 # this prints 1 to 9
 
-lazy_pipe(input) | print | when(lambda x: x != "")
+lazy_pipe(input) | (lambda s: s.upper())| print | when(lambda x: x != "")
 # lazy_pipe also accepts a function as input. The function is called each time as long as the `when` condition holds.
-# this echos anything you input
+# this changes anything you input to uppercases.
 ```
 
 TODO: support multiprocessing with lazy pipe

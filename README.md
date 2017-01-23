@@ -1,4 +1,4 @@
-# syntax_sugar
+# syntax_sugar ![travis_status](https://travis-ci.org/czheo/syntax_sugar_python.svg?branch=master)
 
 This lib adds some syntactic sugar to Python.
 

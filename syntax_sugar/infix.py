@@ -10,7 +10,7 @@ class infix(partial):
     def __rtruediv__(self, left):
         return infix(self.func, left)
 
-of = infix(isinstance)
+is_a = of = infix(isinstance)
 contains = infix(lambda lst, item: item in lst)
 pair = infix(lambda a, b: (a, b))
 join = infix(lambda lst, s: s.join(lst))
@@ -76,6 +76,7 @@ def to(start, end):
 __all__ = [
     'infix',
     'of',
+    'is_a',
     'contains',
     'pair',
     'join',

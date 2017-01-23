@@ -107,13 +107,8 @@ lmap = compose(list, map)
 lmap(lambda x: x ** 2, range(10))
 ```
 
-Let's try some math.
-```
-f(x) = x^2 + 1
-g(x) = 2x - 1
-h(x) = -2x^3 + 3
-```
-We want to represent `f * g * h` in a program, i.e. `fn(x) = f(g(h(x)))`
+Let's say we want to represent `f * g * h` in a program, i.e. `fn(x) = f(g(h(x)))`
+
 ``` python
 f = lambda x: x**2 + 1
 g = lambda x: 2*x - 1

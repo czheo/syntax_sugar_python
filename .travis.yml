@@ -1,0 +1,16 @@
+language: python
+python:
+- '2.7'
+- '3.3'
+- '3.6'
+install: pip install .
+script: pytest
+deploy:
+  provider: pypi
+  user: czheo
+  password:
+    secure: RzUUDwN4xC7T+7p2hHm5cwIS1Mbd7r56/ayZNfNbhVshOJghwVUDq8W0d9xFl2tdxTHwWlgIPsyo1FUqoiWjuziro3ud5VXzsB95OIYip/Eh4U6+/qw9v2QdLkSiQrSK9NRQyZ0X9wRdWFqp3GqX88cRaJ9tTAISfZhNoCuy+nrouajAZ3jtgJxe+N3b9gGsJDOCEYGHcnpSqo6Ev15OhfY7910LbiGI6cd4dp3SkTWLlutdghWDbMnIvMygNUaFUSLU2xW11MBXHiJqT3ct8hSnZkf5gO7bOMOGgjk4mG1PDapEoJiaZv7AF7sW/ZXo67XUsxWWBZ0ZedvtofPFX1sPizP7GTx59ORzuIiIcvLZiMIjUxbkvSjFthtjElK9FZVkBUk/ophJsRB9j+r7Kasun8CPMy38X15vQH6TuD4aHN6iiS2KkuyymDofbDgmjKkAP+F7ewdrntdViMVSFLri4bWl+WalTp0T0qCdNqH/37Q3F+2Mycf2ECH1dyLMM0BtqBJ7iGvYLRWRir6RLYh7CkBfeQ4hCPm4nQukDk//Pr/sfzD+peEawPvSvsYgo9J4ucHRuMw5/eDUCGdzyc5fntvIcY5PDA1CBU8jO0dDucNhbg0+9603RriQUrvbh9BDPkT0hZDcU7ElFdAydKEX24ZdCoMjwo2VDJcs1Dk=
+  on:
+    tags: true
+    distributions: sdist bdist_wheel
+    repo: czheo/syntax_sugar_python

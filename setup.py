@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="syntax_sugar",
-    version="0.0.2",
+    version="0.0.3",
     url='https://github.com/czheo/syntax_sugar_python',
     description="add syntactic sugar to Python",
     author="czheo",
@@ -11,5 +11,11 @@ setup(
     packages=find_packages(),
     install_requires=[
         'multiprocess',
+    ],
+    setup_requires=[
+        'pytest-runner',
+    ],
+    tests_require=[
+        'pytest',
     ],
 )

@@ -104,7 +104,7 @@ print([(x, y) for x, y in (1 /to/ 3) * (4 /to/ 6)])
 # return [(1, 4), (1, 5), (1, 6), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6)]
 ```
 
-Make your own infix functions, so you can append multiple items to a list in one line.
+Make your own infix function, so you can append multiple items to a list in one line.
 ``` python
 @infix
 def push(lst, x):

@@ -2,7 +2,7 @@
 
 This lib adds some syntactic sugar to Python.
 
-NOTE: This is merely a prototype. Only tested under Python 3.6.0. Everything is evolving.
+NOTE: This is merely an experimental prototype to show some potential of operator overloading in Python. Only tested under Python 3.6.0. Anything may evolve without announcement in advance.
 
 Inspired by https://github.com/matz/streem. 
 

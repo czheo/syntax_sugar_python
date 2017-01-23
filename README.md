@@ -55,11 +55,11 @@ Here is an example of requesting a list of urls in parrallel
 ``` python
 import requests
 (
-(pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
+pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
     | each(lambda name: 'http://' + name + '.com')
     | [requests.get] * 3   # !! `requests.get` runs in a ThreadPool of size 3
     | each(lambda resp: (resp.url, resp.headers.get('Server')))
-    | dump())
+    | dump()
 )
 
 # returns

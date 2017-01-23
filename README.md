@@ -88,11 +88,12 @@ import requests
 
 # make your own infix functions
 @infix
-def plus(a, b):
-    return a + b
+def push(lst, x):
+    lst.append(x)
+    return lst
 
-1 /plus/ 2
-# returns 3
+[] /push/ 1 /push/ 2 /push/ 3
+# returns [1,2,3]
 ```
 
 ### composable function

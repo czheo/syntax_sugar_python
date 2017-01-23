@@ -1,5 +1,5 @@
 from functools import partial
-from .composable import compose
+from .composable import compose, composable
 from multiprocess.pool import ThreadPool, Pool
 
 __all__ = [
@@ -15,6 +15,9 @@ __all__ = [
     'thread_syntax',
     'p',
     't',
+    'until',
+    'when',
+    'lazy_pipe',
 ]
 
 def puts(data):
@@ -129,7 +132,14 @@ class pipe:
 # lazy_pipe
 #####
 
+def neg(x):
+    return not x
+
 class until:
+    def __init__(self, cond):
+        self.cond = cond
+
+class when:
     def __init__(self, cond):
         self.cond = cond
 
@@ -138,33 +148,35 @@ class lazy_pipe:
         self.source = source
         self.func = composable(lambda x: x)
 
-    def __or__(self, left):
-        if isinstance(left, dump):
+    def __or__(self, rhs):
+        if isinstance(rhs, dump):
             # dump termination
             return self.dump()
-        elif isinstance(left, until):
-            return self.until(left.cond)
+        elif isinstance(rhs, when):
+            return self.when(rhs.cond)
+        elif isinstance(rhs, until):
+            return self.when(compose(neg, rhs.cond))
         else:
             # read actions
-            self.func = composable(left) * self.func
+            self.func = composable(rhs) * self.func
         return self
 
     def dump(self):
         return self.func(self.source)
 
-    def until(self, cond):
+    def when(self, cond):
         if hasattr(self.source, '__call__'):
             data = self.source()
-            while not cond(data):
+            while cond(data):
                 self.func(data)
                 data = self.source()
             return self
         elif hasattr(self.source, '__iter__'):
             for data in self.source:
                 if cond(data):
-                    break
-                else:
                     self.func(data)
+                else:
+                    break
             return self
         else:
             raise TypeError('pipeline source need be callable or iterable with until condition')

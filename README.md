@@ -79,16 +79,29 @@ pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
 # similar to `range(1, 11)`,  but this is an iterator.
 # Python's nasty range() is right-exclusive. This is right-inclusive.
 
+1 /to/ 10 /by/ 2
+# similar to `range(1, 11, 2)`, you can also specify step size
+
 10 /to/ 1
 # similar to `range(10, 0, -1)`, you can also use decreasing ranges
+
+10 /to/ 1 /by/ 2
+# similar to `range(10, 0, -2)`, you can also specify negative step size
 
 '0' /to/ '9'
 # similar to '0123456789', but this is an iterator.
 # we can also have a range of characters :)
 
+'A' /to/ 'Z' /by/ 3
+# similar to 'ADGJMPSVY', but this is an iterator. Steps also work for characters!
+
 'v' /to/ 'd'
 # similar to 'vutsrqponmlkjihgfed', but this is an iterator
 # e can also have *decreasing* range of characters :)
+
+'v' /to/ 'd' /by/ 3
+# similar to 'vspmjgd', but this is an iterator
+# e can also have *decreasing* range of characters with negative steps
 ```
 
 `/to/` has some advanced features

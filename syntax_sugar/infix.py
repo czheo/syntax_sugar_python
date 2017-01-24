@@ -49,15 +49,21 @@ class To:
         return self
     
     def __next__(self):
-        if self.type == 'number':
-            if self.curr == self.end + self.step:
+        if self.step == 0 or not self.step /is_a/ int:
+            raise TypeError('Interval must be an integer different from 0')
+        elif self.type == 'number':
+            if self.step >= 0 and self.curr > self.end:
+                raise StopIteration
+            elif self.step <= 0 and self.curr < self.end:
                 raise StopIteration
             else:
                 ret = self.curr
                 self.curr += self.step
                 return ret
         elif self.type == 'char':
-            if ord(self.curr) == ord(self.end) + self.step:
+            if self.step >= 0 and ord(self.curr) > ord(self.end):
+                raise StopIteration
+            elif self.step <= 0 and ord(self.curr) < ord(self.end):
                 raise StopIteration
             else:
                 ret = self.curr

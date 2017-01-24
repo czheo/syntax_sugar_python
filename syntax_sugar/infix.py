@@ -24,6 +24,9 @@ INF = float('inf')
 
 class To:
     def __init__(self, start, end):
+        if start == INF: 
+            raise TypeError('Cannot start range from infinity')
+
         valid_char = lambda c: c /of/ str and len(c) == 1
         valid_integer = lambda i: i /of/ int or i == INF
 

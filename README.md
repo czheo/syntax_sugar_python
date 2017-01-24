@@ -72,7 +72,7 @@ pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
 
 ### infix function
 ``` python
-1 /of/ int
+1 /is_a/ int
 # equivalent to `isinstance(1, int)`
 
 1 /to/ 10

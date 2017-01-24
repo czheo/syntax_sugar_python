@@ -51,10 +51,11 @@ class To:
         if value == 0 or not value /is_a/ int:
             raise TypeError('Interval must be an integer different from 0')
         if self.end >= self.start and value < 0:
-            raise TypeError('Cannot define increasing ranges with negative step')
-        if self.end <= self.start and value > 0:
-            raise TypeError('Cannot define decreasing ranges with positive step')
-        self._step = value
+            self._step = -value
+        elif self.end <= self.start and value > 0:
+            self._step = -value
+        else:
+            self._step = value
 
     def __mul__(self, rhs):
         return product(self, rhs)

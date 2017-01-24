@@ -85,7 +85,7 @@ pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
 10 /to/ 1
 # similar to `range(10, 0, -1)`, you can also use decreasing ranges
 
-10 /to/ 1 /by/ -2
+10 /to/ 1 /by/ 2
 # similar to `range(10, 0, -2)`, you can also specify negative step size
 
 '0' /to/ '9'
@@ -99,7 +99,7 @@ pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
 # similar to 'vutsrqponmlkjihgfed', but this is an iterator
 # e can also have *decreasing* range of characters :)
 
-'v' /to/ 'd' /by/ -3
+'v' /to/ 'd' /by/ 3
 # similar to 'vspmjgd', but this is an iterator
 # e can also have *decreasing* range of characters with negative steps
 ```

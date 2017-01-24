@@ -72,16 +72,23 @@ pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
 
 ### infix function
 ``` python
-1 /is_a/ int
+1 /of/ int
 # equivalent to `isinstance(1, int)`
 
 1 /to/ 10
 # similar to `range(1, 11)`,  but this is an iterator.
 # Python's nasty range() is right-exclusive. This is right-inclusive.
 
+10 /to/ 1
+# similar to `range(10, 0, -1)`, you can also use decreasing ranges
+
 '0' /to/ '9'
 # similar to '0123456789', but this is an iterator.
 # we can also have a range of characters :)
+
+'v' /to/ 'd'
+# similar to 'vutsrqponmlkjihgfed', but this is an iterator
+# e can also have *decreasing* range of characters :)
 ```
 
 `/to/` has some advanced features

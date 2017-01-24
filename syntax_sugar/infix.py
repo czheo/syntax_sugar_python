@@ -39,8 +39,22 @@ class To:
 
         self.start = start
         self.curr = self.start
-        self.step = 1 if end > start else -1
+        self._step = 1 if end > start else -1
         self.end = end
+
+    @property
+    def step(self):
+        return self._step
+
+    @step.setter
+    def step(self, value):
+        if value == 0 or not value /is_a/ int:
+            raise TypeError('Interval must be an integer different from 0')
+        if self.end >= self.start and value < 0:
+            raise TypeError('Cannot define increasing ranges with negative step')
+        if self.end <= self.start and value > 0:
+            raise TypeError('Cannot define decreasing ranges with positive step')
+        self._step = value
 
     def __mul__(self, rhs):
         return product(self, rhs)
@@ -49,8 +63,6 @@ class To:
         return self
     
     def __next__(self):
-        if self.step == 0 or not self.step /is_a/ int:
-            raise TypeError('Interval must be an integer different from 0')
         def next_number():
             too_big = self.step > 0 and self.curr > self.end
             too_small = self.step < 0 and self.curr < self.end
@@ -92,13 +104,8 @@ def to(start, end):
 
 @infix
 def by(to_object, step):
-    if to_object.end >= to_object.start and step < 0:
-        raise TypeError('Cannot define increasing ranges with negative step')
-    elif to_object.end <= to_object.start and step > 0:
-        raise TypeError('Cannot define decreasing ranges with positive step')
-    else:
-        to_object.step = step
-        return to_object
+    to_object.step = step
+    return to_object
 
 
 __all__ = [

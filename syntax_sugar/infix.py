@@ -21,14 +21,15 @@ freduce = infix(flip(reduce))
 take = infix(compose(list, islice))
 
 INF = float('inf')
+NEGINF = float('-inf')
 
 class To:
     def __init__(self, start, end):
-        if start == INF: 
-            raise TypeError('Cannot start range from infinity')
+        if start in {INF, NEGINF}:
+            raise ValueError('Cannot start range from infinity')
 
         valid_char = lambda c: c /of/ str and len(c) == 1
-        valid_integer = lambda i: i /of/ int or i == INF
+        valid_integer = lambda i: i /of/ int or i == INF or i == NEGINF
 
         if valid_integer(start) and valid_integer(end):
             self.type = 'number'
@@ -127,6 +128,7 @@ __all__ = [
     'to',
     'by',
     'INF',
+    'NEGINF',
     'hasattr',
     'fmap',
     'freduce',

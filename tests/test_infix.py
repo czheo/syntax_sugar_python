@@ -69,6 +69,19 @@ def test_bad_step():
     with raises(ValueError):
         to_obj.step = 1
 
+def test_infinity():
+    with raises(ValueError):
+        INF /to/ 100
+
+    with raises(ValueError):
+        NEGINF /to/ 1
+
+    assert 1 /to/ INF /take/ 10 == list(range(1, 11))
+    assert 1 /to/ NEGINF /take/ 10 == list(range(1, -9, -1))
+
+    assert 1 /to/ INF /by/ 2 /take/ 10 == list(range(1, 100, 2))[:10]
+    assert 1 /to/ NEGINF /by/ 2 /take/ 10 == list(range(1, -100, -2))[:10]
+
 def test_take():
     assert 1 /to/ INF /take/ 5 == [1,2,3,4,5]
 

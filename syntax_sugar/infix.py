@@ -50,12 +50,7 @@ class To:
     def step(self, value):
         if value == 0 or not value /is_a/ int:
             raise TypeError('Interval must be an integer different from 0')
-        if self.end >= self.start and value < 0:
-            self._step = -value
-        elif self.end <= self.start and value > 0:
-            self._step = -value
-        else:
-            self._step = value
+        self._step = value
 
     def __mul__(self, rhs):
         return product(self, rhs)
@@ -105,7 +100,13 @@ def to(start, end):
 
 @infix
 def by(to_object, step):
-    to_object.step = step
+    if to_object.end >= to_object.start and step < 0:
+        to_object.step = -step
+    elif to_object.end <= to_object.start and step > 0:
+        to_object.step = -step
+    else:
+        to_object.step = step
+
     return to_object
 
 

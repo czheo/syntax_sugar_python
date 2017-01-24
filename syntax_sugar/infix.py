@@ -19,7 +19,7 @@ fmap = infix(flip(map))
 ffilter = infix(flip(filter))
 freduce = infix(flip(reduce))
 take = infix(compose(list, islice))
-after = infix(lambda seq, idx: islice(seq, idx, None))
+drop = infix(lambda seq, idx: islice(seq, idx, None))
 
 INF = float('inf')
 NEGINF = float('-inf')
@@ -135,5 +135,5 @@ __all__ = [
     'freduce',
     'ffilter',
     'take',
-    'after',
+    'drop',
 ]

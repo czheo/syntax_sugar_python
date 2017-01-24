@@ -85,10 +85,10 @@ def test_infinity():
 def test_take():
     assert 1 /to/ INF /take/ 5 == [1,2,3,4,5]
 
-def test_after():
-    assert list(1 /to/ 10 /after/ 2 /take/ 3) == [3, 4, 5]
-    assert list(1 /to/ INF /after/ 2 /take/ 3) == [3, 4, 5]
-    assert list(10 /to/ 1 /after/ 3 /take/ 2) == [7, 6]
+def test_drop():
+    assert list(1 /to/ 10 /drop/ 2 /take/ 3) == [3, 4, 5]
+    assert list(1 /to/ INF /drop/ 2 /take/ 3) == [3, 4, 5]
+    assert list(10 /to/ 1 /drop/ 3 /take/ 2) == [7, 6]
 
 def test_is_a():
     values_types_right = [

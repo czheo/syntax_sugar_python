@@ -1,7 +1,11 @@
+from pytest import raises
 import random
 from syntax_sugar import *
+from syntax_sugar.infix import To
 
 def test_int_to_int():
+    assert list(1 /to/ 1) == [1]
+    assert list(2 /to/ 1) == [2, 1]
     for i in range(100):
         start, end = random.randint(1, 1e3), random.randint(1, 1e3)
         end += start
@@ -11,6 +15,8 @@ def test_int_to_int():
         assert list(start /to/ end) == list(range(start, end - 1, -1))
 
 def test_int_to_int_with_step():
+    assert list(1 /to/ 1 /by/ 2) == [1]
+    assert list(2 /to/ 1 /by/ 2) == [2]
     for i in range(100):
         start, end = random.randint(1, 1e3), random.randint(1, 1e3)
         step = random.randint(1, 10)
@@ -46,6 +52,22 @@ def test_str_to_str_with_step():
     assert str('V' /to/ 'D' /by/ 5) == 'VQLG'
     assert str('v' /to/ 'd' /by/ -3) == 'vspmjgd'
     assert str('v' /to/ 'd' /by/ 3) == 'vspmjgd'
+
+def test_bad_step():
+    to_obj = To(1, 2)
+    for bad_step in ["x", [], 1.5]:
+        with raises(TypeError):
+            to_obj.step = bad_step
+
+    with raises(ValueError):
+        to_obj.step = 0
+
+    with raises(ValueError):
+        to_obj.step = -1
+
+    to_obj = To(2, 1)
+    with raises(ValueError):
+        to_obj.step = 1
 
 def test_take():
     assert 1 /to/ INF /take/ 5 == [1,2,3,4,5]

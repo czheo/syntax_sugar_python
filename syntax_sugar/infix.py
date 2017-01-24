@@ -48,8 +48,15 @@ class To:
 
     @step.setter
     def step(self, value):
-        if value == 0 or not value /is_a/ int:
-            raise TypeError('Interval must be an integer different from 0')
+        if not value /is_a/ int:
+            raise TypeError('Step must be int')
+        elif value == 0:
+            raise ValueError('Step cannot be zero')
+        elif self.start < self.end and value < 0:
+            raise ValueError('Increasing range with negative step')
+        elif self.start > self.end and value > 0:
+            raise ValueError('Decreasing range with positive step')
+        
         self._step = value
 
     def __mul__(self, rhs):

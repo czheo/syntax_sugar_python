@@ -87,6 +87,7 @@ def test_take():
 
 def test_after():
     assert list(1 /to/ 10 /after/ 2 /take/ 3) == [3, 4, 5]
+    assert list(1 /to/ INF /after/ 2 /take/ 3) == [3, 4, 5]
     assert list(10 /to/ 1 /after/ 3 /take/ 2) == [7, 6]
 
 def test_is_a():

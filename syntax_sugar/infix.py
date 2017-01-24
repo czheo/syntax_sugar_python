@@ -24,18 +24,20 @@ INF = float('inf')
 
 class To:
     def __init__(self, start, end):
-        if start /of/ int and (end /of/ int or end == INF):
+        valid_char = lambda c: c /of/ str and len(c) == 1
+        valid_integer = lambda i: i /of/ int or i == INF
+
+        if valid_integer(start) and valid_integer(end):
             self.type = 'number'
-            self.start = start
-            self.curr = self.start
-            self.end = end
-        elif start /of/ str and end /of/ str:
+        elif valid_char(start) and valid_char(end):
             self.type = 'char'
-            self.start = start
-            self.curr = self.start
-            self.end = end
         else:
             raise TypeError('Unknown range: %s to %s' % (start, end))
+
+        self.start = start
+        self.curr = self.start
+        self.step = 1 if end > start else -1
+        self.end = end
 
     def __mul__(self, rhs):
         return product(self, rhs)
@@ -45,19 +47,19 @@ class To:
     
     def __next__(self):
         if self.type == 'number':
-            if self.curr <= self.end:
-                ret = self.curr
-                self.curr += 1
-                return ret
-            else:
+            if self.curr == self.end + self.step:
                 raise StopIteration
+            else:
+                ret = self.curr
+                self.curr += self.step
+                return ret
         elif self.type == 'char':
-            if ord(self.curr) <= ord(self.end):
-                ret = self.curr
-                self.curr = chr(ord(self.curr) + 1)
-                return ret
-            else:
+            if ord(self.curr) == ord(self.end) + self.step:
                 raise StopIteration
+            else:
+                ret = self.curr
+                self.curr = chr(ord(self.curr) + self.step)
+                return ret
         else:
             raise StopIteration
     

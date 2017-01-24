@@ -90,6 +90,17 @@ class To:
 def to(start, end):
     return To(start, end)
 
+@infix
+def by(to_object, step):
+    if to_object.end >= to_object.start and step < 0:
+        raise TypeError('Cannot define increasing ranges with negative step')
+    elif to_object.end <= to_object.start and step > 0:
+        raise TypeError('Cannot define decreasing ranges with positive step')
+    else:
+        to_object.step = step
+        return to_object
+
+
 __all__ = [
     'infix',
     'of',
@@ -98,6 +109,7 @@ __all__ = [
     'pair',
     'join',
     'to',
+    'by',
     'INF',
     'hasattr',
     'fmap',

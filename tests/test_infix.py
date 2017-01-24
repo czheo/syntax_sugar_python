@@ -10,6 +10,16 @@ def test_int_to_int():
         start, end = end, start
         assert list(start /to/ end) == list(range(start, end - 1, -1))
 
+def test_int_to_int_with_step():
+    for i in range(100):
+        start, end = random.randint(1, 1e3), random.randint(1, 1e3)
+        step = random.randint(1, 10)
+        end += start
+        assert list(start /to/ end /by/ step) == list(range(start, end + 1, step))
+
+        start, end = end, start
+        assert list(start /to/ end /by/ -step) == list(range(start, end - 1, -step))
+
 def test_str_to_str():
     assert str('A' /to/ 'Z') == 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     assert str('Z' /to/ 'A') == 'ZYXWVUTSRQPONMLKJIHGFEDCBA'

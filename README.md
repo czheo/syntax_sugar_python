@@ -76,32 +76,26 @@ pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
 # equivalent to `isinstance(1, int)`
 
 1 /to/ 10
-# similar to `range(1, 11)`,  but this is an iterator.
+# An iterator similar to `range(1, 11)`.
 # Python's nasty range() is right-exclusive. This is right-inclusive.
 
-1 /to/ 10 /by/ 2
-# similar to `range(1, 11, 2)`, you can also specify step size
-
 10 /to/ 1
-# similar to `range(10, 0, -1)`, you can also use decreasing ranges
-
-10 /to/ 1 /by/ 2
-# similar to `range(10, 0, -2)`, you can also specify negative step size
+# We can go backward.
 
 '0' /to/ '9'
-# similar to '0123456789', but this is an iterator.
-# we can also have a range of characters :)
+# We can also have a range of characters :)
+
+1 /to/ 10 /by/ 2
+# We can also specify step sizes.
+# Similar to `range(1, 11, 2)`
+
+10 /to/ 1 /by/ 2
+# Go backward.
+# Similar to `range(10, 0, -2)`
 
 'A' /to/ 'Z' /by/ 3
-# similar to 'ADGJMPSVY', but this is an iterator. Steps also work for characters!
-
-'v' /to/ 'd'
-# similar to 'vutsrqponmlkjihgfed', but this is an iterator
-# e can also have *decreasing* range of characters :)
-
-'v' /to/ 'd' /by/ 3
-# similar to 'vspmjgd', but this is an iterator
-# e can also have *decreasing* range of characters with negative steps
+# Also works with characters with /by/.
+# An iterator similar to 'ADGJMPSVY'
 ```
 
 `/to/` has some advanced features
@@ -125,6 +119,7 @@ print([(x, y) for x, y in (1 /to/ 3) * (4 /to/ 6)])
 ```
 
 Make your own infix function, so you can append multiple items to a list in one line.
+
 ``` python
 @infix
 def push(lst, x):
@@ -174,7 +169,9 @@ fn = compose(f, g, h)
 
 fn(5) # 245026
 ```
+
 or you can do
+
 ```python
 f = composable(lambda x: x**2 + 1)
 g = composable(lambda x: 2*x - 1)

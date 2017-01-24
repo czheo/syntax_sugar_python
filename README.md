@@ -50,7 +50,7 @@ What makes this syntax good is that you can specify how many threads you want to
 pipe([1,2,3,4,5]) | [print] * 3  # print will run in a ThreadPool of size 3
 ```
 
-Here is an example of requesting a list of urls in parrallel
+Here is an example of requesting a list of urls in parallel
 
 ``` python
 import requests

@@ -29,6 +29,15 @@ def test_str_to_str():
     assert str('V' /to/ 'D') == 'VUTSRQPONMLKJIHGFED'
     assert str('v' /to/ 'd') == 'vutsrqponmlkjihgfed'
 
+def test_str_to_str_with_step():
+    assert str('A' /to/ 'Z' /by/ 3) == 'ADGJMPSVY'
+    assert str('Z' /to/ 'A' /by/ -3) == 'ZWTQNKHEB'
+    assert str('a' /to/ 'z' /by/ 4) == 'aeimquy'
+    assert str('z' /to/ 'a' /by/ -4) == 'zvrnjfb'
+    assert str('D' /to/ 'V' /by/ 5) == 'DINS'
+    assert str('V' /to/ 'D' /by/ -5) == 'VQLG'
+    assert str('v' /to/ 'd' /by/ -3) == 'vspmjgd'
+
 def test_take():
     assert 1 /to/ INF /take/ 5 == [1,2,3,4,5]
 

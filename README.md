@@ -212,4 +212,4 @@ fn(5)
 # returns 5^2 * 3 + 2 = 77
 ```
 
-more receipes: https://github.com/czheo/syntax_sugar_python/tree/master/receipes
+more receipes: https://github.com/czheo/syntax_sugar_python/tree/master/recipes

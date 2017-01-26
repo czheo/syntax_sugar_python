@@ -117,8 +117,8 @@ print(0 /to/ NEGINF /by/ 2 /take/ 5)
 # also works with negative infinity.
 # return [0, -2, -4, -6, -8]
 
-print(1 /to/ 10 /after/ 5)
-# there is a `after` functon which adds an offset to the range beginning
+print(1 /to/ 10 /drop/ 5)
+# there is a `drop` functon which drop N items from the head
 # return [6, 7, 8, 9, 10]
 
 # print all combinations of [1..3] * [4..6]

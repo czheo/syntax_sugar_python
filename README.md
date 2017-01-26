@@ -110,12 +110,16 @@ for i in 1 /to/ INF:
     print(i)
 
 print(1 /to/ INF /take/ 5)
-# there is a `take` funciton which is similar to itertools.islice
+# there is a `take` functon which is similar to itertools.islice
 # return [1, 2, 3, 4, 5]
 
 print(0 /to/ NEGINF /by/ 2 /take/ 5)
 # also works with negative infinity.
 # return [0, -2, -4, -6, -8]
+
+print(1 /to/ 10 /after/ 5)
+# there is a `after` functon which adds an offset to the range beginning
+# return [6, 7, 8, 9, 10]
 
 # print all combinations of [1..3] * [4..6]
 print([(x, y) for x, y in (1 /to/ 3) * (4 /to/ 6)])

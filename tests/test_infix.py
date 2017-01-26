@@ -1,73 +1,61 @@
 from pytest import raises
 import random
 from syntax_sugar import *
-from syntax_sugar.infix import To
+from syntax_sugar.iter import Iterator
+
+def _assert_iter(expr, expected):
+    assert expr /is_a/ Iterator == True
+    assert list(expr) == list(expected)
 
 def test_int_to_int():
-    assert list(1 /to/ 1) == [1]
-    assert list(2 /to/ 1) == [2, 1]
+    _assert_iter(1 /to/ 1, [1])
+    _assert_iter(2 /to/ 1, [2, 1])
     for i in range(100):
         start, end = random.randint(1, 1e3), random.randint(1, 1e3)
         end += start
-        assert list(start /to/ end) == list(range(start, end + 1))
+        _assert_iter(start /to/ end, range(start, end + 1))
 
         start, end = end, start
-        assert list(start /to/ end) == list(range(start, end - 1, -1))
+        _assert_iter(start /to/ end, range(start, end - 1, -1))
 
 def test_int_to_int_with_step():
-    assert list(1 /to/ 1 /by/ 2) == [1]
-    assert list(2 /to/ 1 /by/ 2) == [2]
+    _assert_iter(1 /to/ 1 /by/ 2, [1])
+    _assert_iter(2 /to/ 1 /by/ 2, [2])
     for i in range(100):
         start, end = random.randint(1, 1e3), random.randint(1, 1e3)
         step = random.randint(1, 10)
         end += start
-        assert list(start /to/ end /by/ step) == list(range(start, end + 1, step))
-        assert list(start /to/ end /by/ -step) == list(range(start, end + 1, step))
+        _assert_iter(start /to/ end /by/ step, range(start, end + 1, step))
+        _assert_iter(start /to/ end /by/ -step, range(start, end + 1, step))
 
         start, end = end, start
-        assert list(start /to/ end /by/ -step) == list(range(start, end - 1, -step))
-        assert list(start /to/ end /by/ step) == list(range(start, end - 1, -step))
+        _assert_iter(start /to/ end /by/ -step, range(start, end - 1, -step))
+        _assert_iter(start /to/ end /by/ step, range(start, end - 1, -step))
 
 def test_str_to_str():
-    assert str('A' /to/ 'Z') == 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    assert str('Z' /to/ 'A') == 'ZYXWVUTSRQPONMLKJIHGFEDCBA'
-    assert str('a' /to/ 'z') == 'abcdefghijklmnopqrstuvwxyz'
-    assert str('z' /to/ 'a') == 'zyxwvutsrqponmlkjihgfedcba'
-    assert str('D' /to/ 'V') == 'DEFGHIJKLMNOPQRSTUV'
-    assert str('V' /to/ 'D') == 'VUTSRQPONMLKJIHGFED'
-    assert str('v' /to/ 'd') == 'vutsrqponmlkjihgfed'
+    _assert_iter('A' /to/ 'Z', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
+    _assert_iter('Z' /to/ 'A', 'ZYXWVUTSRQPONMLKJIHGFEDCBA')
+    _assert_iter('a' /to/ 'z', 'abcdefghijklmnopqrstuvwxyz')
+    _assert_iter('z' /to/ 'a', 'zyxwvutsrqponmlkjihgfedcba')
+    _assert_iter('D' /to/ 'V', 'DEFGHIJKLMNOPQRSTUV')
+    _assert_iter('V' /to/ 'D', 'VUTSRQPONMLKJIHGFED')
+    _assert_iter('v' /to/ 'd', 'vutsrqponmlkjihgfed')
 
 def test_str_to_str_with_step():
-    assert str('A' /to/ 'Z' /by/ 3) == 'ADGJMPSVY'
-    assert str('A' /to/ 'Z' /by/ -3) == 'ADGJMPSVY'
-    assert str('Z' /to/ 'A' /by/ -3) == 'ZWTQNKHEB'
-    assert str('Z' /to/ 'A' /by/ 3) == 'ZWTQNKHEB'
-    assert str('a' /to/ 'z' /by/ 4) == 'aeimquy'
-    assert str('a' /to/ 'z' /by/ -4) == 'aeimquy'
-    assert str('z' /to/ 'a' /by/ -4) == 'zvrnjfb'
-    assert str('z' /to/ 'a' /by/ 4) == 'zvrnjfb'
-    assert str('D' /to/ 'V' /by/ 5) == 'DINS'
-    assert str('D' /to/ 'V' /by/ -5) == 'DINS'
-    assert str('V' /to/ 'D' /by/ -5) == 'VQLG'
-    assert str('V' /to/ 'D' /by/ 5) == 'VQLG'
-    assert str('v' /to/ 'd' /by/ -3) == 'vspmjgd'
-    assert str('v' /to/ 'd' /by/ 3) == 'vspmjgd'
-
-def test_bad_step():
-    to_obj = To(1, 2)
-    for bad_step in ["x", [], 1.5]:
-        with raises(TypeError):
-            to_obj.step = bad_step
-
-    with raises(ValueError):
-        to_obj.step = 0
-
-    with raises(ValueError):
-        to_obj.step = -1
-
-    to_obj = To(2, 1)
-    with raises(ValueError):
-        to_obj.step = 1
+    _assert_iter('A' /to/ 'Z' /by/ 3, 'ADGJMPSVY')
+    _assert_iter('A' /to/ 'Z' /by/ -3, 'ADGJMPSVY')
+    _assert_iter('Z' /to/ 'A' /by/ -3, 'ZWTQNKHEB')
+    _assert_iter('Z' /to/ 'A' /by/ 3, 'ZWTQNKHEB')
+    _assert_iter('a' /to/ 'z' /by/ 4, 'aeimquy')
+    _assert_iter('a' /to/ 'z' /by/ -4, 'aeimquy')
+    _assert_iter('z' /to/ 'a' /by/ -4, 'zvrnjfb')
+    _assert_iter('z' /to/ 'a' /by/ 4, 'zvrnjfb')
+    _assert_iter('D' /to/ 'V' /by/ 5, 'DINS')
+    _assert_iter('D' /to/ 'V' /by/ -5, 'DINS')
+    _assert_iter('V' /to/ 'D' /by/ -5, 'VQLG')
+    _assert_iter('V' /to/ 'D' /by/ 5, 'VQLG')
+    _assert_iter('v' /to/ 'd' /by/ -3, 'vspmjgd')
+    _assert_iter('v' /to/ 'd' /by/ 3, 'vspmjgd')
 
 def test_infinity():
     with raises(ValueError):
@@ -76,19 +64,30 @@ def test_infinity():
     with raises(ValueError):
         NEGINF /to/ 1
 
-    assert 1 /to/ INF /take/ 10 == list(range(1, 11))
-    assert 1 /to/ NEGINF /take/ 10 == list(range(1, -9, -1))
+    _assert_iter(1 /to/ INF /take/ 10, range(1, 11))
+    _assert_iter(1 /to/ NEGINF /take/ 10, range(1, -9, -1))
 
-    assert 1 /to/ INF /by/ 2 /take/ 10 == list(range(1, 100, 2))[:10]
-    assert 1 /to/ NEGINF /by/ 2 /take/ 10 == list(range(1, -100, -2))[:10]
+    _assert_iter(1 /to/ INF /by/ 2 /take/ 10, list(range(1, 100, 2))[:10])
+    _assert_iter(1 /to/ NEGINF /by/ 2 /take/ 10, list(range(1, -100, -2))[:10])
+
+    _assert_iter(1 /to/ NEGINF /by/ 2 /take/ 10 /drop/ 2, list(range(1, -100, -2))[2:10])
+    _assert_iter(1 /to/ NEGINF /by/ 2 /drop/ 5 /take/ 3, [-9, -11, -13])
+
 
 def test_take():
-    assert 1 /to/ INF /take/ 5 == [1,2,3,4,5]
+    _assert_iter(1 /to/ INF /take/ 5, [1,2,3,4,5])
+    _assert_iter(range(10) /take/ 5, [0,1,2,3,4])
+    _assert_iter([1,2,3,4,5,6,7] /take/ 5, [1,2,3,4,5])
 
 def test_drop():
-    assert list(1 /to/ 10 /drop/ 2 /take/ 3) == [3, 4, 5]
-    assert list(1 /to/ INF /drop/ 2 /take/ 3) == [3, 4, 5]
-    assert list(10 /to/ 1 /drop/ 3 /take/ 2) == [7, 6]
+    _assert_iter(1 /to/ 10 /drop/ 2 /take/ 3, [3, 4, 5])
+    _assert_iter(1 /to/ INF /drop/ 2 /take/ 3, [3, 4, 5])
+    _assert_iter(10 /to/ 1 /drop/ 3 /take/ 2, [7, 6])
+
+def test_iter_pipe():
+    assert 0 /to/ 9 | each(lambda x: x**2) | dump() == [x**2 for x in range(10)]
+    assert 0 /to/ 9 /take/ 2 | each(lambda x: x**2) | dump() == [x**2 for x in range(10)][:2]
+    assert 0 /to/ 9 /drop/ 2 | each(lambda x: x**2) | dump() == [x**2 for x in range(10)][2:]
 
 def test_is_a():
     values_types_right = [

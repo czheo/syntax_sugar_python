@@ -1,8 +1,10 @@
+from itertools import product
+
 INF = float('inf')
 NEGINF = float('-inf')
 
 class Iterator:
-    def __init__(self, start, end):
+    def __init__(self, start, end, step=None):
         if start in {INF, NEGINF}:
             raise ValueError('Cannot start range from infinity')
 
@@ -18,8 +20,11 @@ class Iterator:
 
         self.start = start
         self.curr = self.start
-        self._step = 1 if end > start else -1
+        self._step = step if step != None else 1 if end > start else -1
         self.end = end
+
+        validate_range(self.start, self.end, self._step)
+
 
     @property
     def step(self):
@@ -27,15 +32,7 @@ class Iterator:
 
     @step.setter
     def step(self, value):
-        if not isinstance(value, int):
-            raise TypeError('Step must be int')
-        elif value == 0:
-            raise ValueError('Step cannot be zero')
-        elif self.start < self.end and value < 0:
-            raise ValueError('Increasing range with negative step')
-        elif self.start > self.end and value > 0:
-            raise ValueError('Decreasing range with positive step')
-        
+        validate_range(self.start, self.end, value)
         self._step = value
 
     def __mul__(self, rhs):
@@ -79,3 +76,19 @@ class Iterator:
             return ''.join(self)
         else:
             raise NotImplementedError
+
+def validate_range(start, end, step):
+    if not isinstance(step, int):
+        raise TypeError('Step must be int')
+    elif step == 0:
+        raise ValueError('Step cannot be zero')
+    elif start < end and step < 0:
+        raise ValueError('Increasing range with negative step')
+    elif start > end and step > 0:
+        raise ValueError('Decreasing range with positive step')
+
+__all__ = [
+    'INF',
+    'NEGINF',
+    'Iterator',
+]

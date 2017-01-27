@@ -1,5 +1,5 @@
 from functools import partial, reduce
-from itertools import product, islice
+from itertools import islice
 from .util import flip
 from .composable import compose
 from .pipe import Iterator

@@ -16,11 +16,8 @@ class composable(partial):
 
 def compose(*args):
     if len(args) == 1:
-        if hasattr(args[0], '__iter__'):
-            return reduce(lambda acc, x: acc * x, map(composable, args[0]))
-        elif hasattr(args[0], '__call__'):
-            return composable(args[0])
-        else:
-            raise TypeError('Unknown Args: %s' % args)
+        return args[0]
+    if len(args) == 2:
+        return lambda *ag, **kwag: args[0](args[1](*ag, **kwag))
     else:
-        return reduce(lambda acc, x: acc * x, map(composable, args))
+        return compose(compose(args[:-1]), args[-1])

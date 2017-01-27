@@ -1,5 +1,6 @@
 from functools import partial
 from .composable import compose, composable
+from .iterator import *
 from multiprocess.pool import ThreadPool, Pool
 
 __all__ = [
@@ -18,6 +19,9 @@ __all__ = [
     'until',
     'when',
     'lazy_pipe',
+    'INF',
+    'NEGINF',
+    'Iterator',
 ]
 
 def puts(data):
@@ -180,3 +184,4 @@ class lazy_pipe:
             return self
         else:
             raise TypeError('pipeline source need be callable or iterable with until condition')
+

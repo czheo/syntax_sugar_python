@@ -1,7 +1,7 @@
 from pytest import raises
 import random
 from syntax_sugar import *
-from syntax_sugar.infix import To
+from syntax_sugar.pipe import Iterator
 
 def test_int_to_int():
     assert list(1 /to/ 1) == [1]
@@ -54,20 +54,20 @@ def test_str_to_str_with_step():
     assert str('v' /to/ 'd' /by/ 3) == 'vspmjgd'
 
 def test_bad_step():
-    to_obj = To(1, 2)
+    iterator = Iterator(1, 2)
     for bad_step in ["x", [], 1.5]:
         with raises(TypeError):
-            to_obj.step = bad_step
+            iterator.step = bad_step
 
     with raises(ValueError):
-        to_obj.step = 0
+        iterator.step = 0
 
     with raises(ValueError):
-        to_obj.step = -1
+        iterator.step = -1
 
-    to_obj = To(2, 1)
+    iterator = Iterator(2, 1)
     with raises(ValueError):
-        to_obj.step = 1
+        iterator.step = 1
 
 def test_infinity():
     with raises(ValueError):

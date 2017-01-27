@@ -11,25 +11,60 @@ Inspired by https://github.com/matz/streem.
 pip install syntax_sugar
 ```
 
-# Usage
-This is the only line you need to use this lib.
-```
+# Use
+
+To test out this lib, you can simply do.
+
+``` python
 from syntax_sugar import *
 ```
 
+For serious use, you can explicitly import each component as explained below ... if you dare to use this lib. 
+
 ### pipe
 ``` python
+from syntax_sugar import pipe, END
+from functools import partial
+
+pipe(10) | range | partial(map, lambda x: x**2) | list | print | END
 # put 10 into the pipe and just let data flow.
-pipe(10) | range | each(lambda x: x ** 2) | print
 # output: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+# remember to call END at the end, so the pipe knows you want start the pipe
+# NOTE: everything in the middle of the pipe is just normal Python functions
 
-# save the result to a var
-x = pipe(10) | range | each(lambda x: x ** 2) | dump()
-# remember to call dump at the end, so the pipe will know you want to dump the value
+pipe(10) | range | (map, lambda x: x**2) | list | print | END
+# Tuples are shortcuts for partial functions
 
+from syntax_sugar import each
+x = pipe(10) | range | each(lambda x: x ** 2) | END
+# `each` is just a shortcut of the partial function of `map`
+# We can also save the result in a variable
+
+pipe(10) | range | each(str) | ''.join > 'test.txt'
 # wanna write to a file? Why not!
-pipe(10) | range | (map, str) | concat > 'test.txt'
 # write "0123456789" to test.txt
+# We don't need to put END here.
+```
+
+We can connect multiple pipes to create a longer pipe
+
+``` python
+from syntax_sugar import pipe, each, END
+from functools import reduce
+
+p1 = pipe(10) | range | each(lambda x: x/2)
+# head pipe can have input value
+p2 = pipe() | (reduce, lambda acc, x: (acc + x)/2)
+p3 = pipe() | int | range | sum
+# middle pipes can have no input value
+
+p1 | p2 | p3 | END
+# returns 6
+
+# you can also put a different value in the pipe
+p = p1 | p2 | p3
+p(20)
+# returns 36
 ```
 
 ### pipe with thread/process and multiprocessing
@@ -39,28 +74,29 @@ You can have a function running in a seperate thread with pipe. Just put it in a
 Because of the notorious GIL(Global Interpret Lock) of Python, people may want processes instead of threads. Just put a function in `p[]`.
 
 ``` python
-pipe(10) | [print]   # print run in a thread
-pipe(10) | t[print]  # print run in a thread
-pipe(10) | p[print]  # print run in a process
+from syntax_sugar import thread_syntax as t, process_syntax as p
+
+pipe(10) | [print] | END   # print run in a thread
+pipe(10) | t[print] | END  # print run in a thread
+pipe(10) | p[print] | END  # print run in a process
 ```
 
 What makes this syntax good is that you can specify how many threads you want to spawn, by doing `[function] * n` where `n` is the number of threads.
 
 ``` python
-pipe([1,2,3,4,5]) | [print] * 3  # print will run in a ThreadPool of size 3
+pipe([1,2,3,4,5]) | [print] * 3 | END # print will run in a ThreadPool of size 3
 ```
 
 Here is an example of requesting a list of urls in parallel
 
 ``` python
 import requests
-(
-pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
+(pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
     | each(lambda name: 'http://' + name + '.com')
     | [requests.get] * 3   # !! `requests.get` runs in a ThreadPool of size 3
     | each(lambda resp: (resp.url, resp.headers.get('Server')))
-    | dump()
-)
+    | list
+    | END)
 
 # returns
 # [('http://www.google.com/', 'gws'),
@@ -72,8 +108,13 @@ pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
 
 ### infix function
 ``` python
+from syntax_sugar import is_a, hasattr, to, by, drop
+
 1 /is_a/ int
 # equivalent to `isinstance(1, int)`
+
+range(10) /hasattr/ '__iter__'
+# equivalent to `hasattr(range(10), "__iter__")`
 
 1 /to/ 10
 # An iterator similar to `range(1, 11)`.
@@ -93,9 +134,9 @@ pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
 # Go backward.
 # Similar to `range(10, 0, -2)`
 
-'A' /to/ 'Z' /by/ 3
-# Also works with characters with /by/.
-# An iterator similar to 'ADGJMPSVY'
+1 /to/ 10 /drop/ 5
+# there is a `drop` functon which drop N items from the head
+# An iterator similar to [6, 7, 8, 9, 10]
 ```
 
 `/to/` has some advanced features
@@ -106,34 +147,34 @@ pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
 - support pipe.
 
 ``` python
+from syntax_sugar import INF, NEGINF, take, each
+
 # CAUTION: this will infinitely print numbers
 for i in 1 /to/ INF:
     print(i)
 
-print(1 /to/ INF /take/ 5)
+list(1 /to/ INF /take/ 5)
 # there is a `take` functon which is similar to itertools.islice
 # return [1, 2, 3, 4, 5]
 
-print(0 /to/ NEGINF /by/ 2 /take/ 5)
+list(0 /to/ NEGINF /by/ 2 /take/ 5)
 # also works with negative infinity.
 # return [0, -2, -4, -6, -8]
 
-print(1 /to/ 10 /drop/ 5)
-# there is a `drop` functon which drop N items from the head
-# return [6, 7, 8, 9, 10]
-
-# print all combinations of [1..3] * [4..6]
-print([(x, y) for x, y in (1 /to/ 3) * (4 /to/ 6)])
+list((1 /to/ 3) * (4 /to/ 6))
+# all combinations of [1..3] * [4..6]
 # return [(1, 4), (1, 5), (1, 6), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6)]
 
-# Now, these infix functions can also be piped
-1 /to/ 10 /take/ 5 | each(lambda x: x **2) | print
+1 /to/ 10 /take/ 5 | each(lambda x: x **2) | list | END
+# These infix functions can also be piped.
 # [1, 4, 9, 16, 25]
 ```
 
 Make your own infix function, so you can append multiple items to a list in one line.
 
 ``` python
+from syntax_sugar import infix
+
 @infix
 def push(lst, x):
     lst.append(x)
@@ -143,78 +184,4 @@ def push(lst, x):
 # returns [1,2,3]
 ```
 
-### lazy pipe
-
-Because our `pipe` is quite hard working, it doesn't work well with the lazy `/to/` function. 
-
-`lazy_pipe` works in a "one-by-one" manner. It puts only 1 item into the pipe at each time.
-
-``` python
-lazy_pipe(1 /to/ INF) | print | when(lambda x: x < 10)
-# this prints 1 to 9
-
-lazy_pipe(input) | (lambda s: s.upper())| print | when(lambda x: x != "")
-# lazy_pipe also accepts a function as input. The function is called each time as long as the `when` condition holds.
-# this changes anything you input to uppercases.
-```
-
-TODO: support multiprocessing with lazy pipe
-
-### composable function
-
-In math, `(f * g) (x) = f(g(x))`. This is called function composition.
-
-``` python
-# this transfer a map object to list
-lmap = compose(list, map)
-# lmap equivalent to `list(map(...))`
-lmap(lambda x: x ** 2, range(10))
-```
-
-Let's say we want to represent `f * g * h` in a program, i.e. `fn(x) = f(g(h(x)))`
-
-``` python
-f = lambda x: x**2 + 1
-g = lambda x: 2*x - 1
-h = lambda x: -2 * x**3 + 3
-
-fn = compose(f, g, h)
-
-fn(5) # 245026
-```
-
-or you can do
-
-```python
-f = composable(lambda x: x**2 + 1)
-g = composable(lambda x: 2*x - 1)
-h = composable(lambda x: -2 * x**3 + 3)
-
-fn = f * g * h
-
-fn(5) # 245026
-```
-
-Some times you may prefer the decorator way.
-
-``` python
-# make your own composable functions
-@composable
-def add2(x):
-    return x + 2
-
-@composable
-def mul3(x):
-    return x * 3
-
-@composable
-def pow2(x):
-    return x ** 2
-    
-fn = add2 * mul3 * pow2
-# equivalent to `add2(mul3(pow2(n)))`
-fn(5)
-# returns 5^2 * 3 + 2 = 77
-```
-
-more receipes: https://github.com/czheo/syntax_sugar_python/tree/master/recipes
+More receipes: https://github.com/czheo/syntax_sugar_python/tree/master/recipes

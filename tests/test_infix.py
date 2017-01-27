@@ -85,9 +85,9 @@ def test_drop():
     _assert_iter(10 /to/ 1 /drop/ 3 /take/ 2, [7, 6])
 
 def test_iter_pipe():
-    assert 0 /to/ 9 | each(lambda x: x**2) | dump() == [x**2 for x in range(10)]
-    assert 0 /to/ 9 /take/ 2 | each(lambda x: x**2) | dump() == [x**2 for x in range(10)][:2]
-    assert 0 /to/ 9 /drop/ 2 | each(lambda x: x**2) | dump() == [x**2 for x in range(10)][2:]
+    assert 0 /to/ 9 | each(lambda x: x**2) | list | END == [x**2 for x in range(10)]
+    assert 0 /to/ 9 /take/ 2 | each(lambda x: x**2) | list | END == [x**2 for x in range(10)][:2]
+    assert 0 /to/ 9 /drop/ 2 | each(lambda x: x**2) | list| END == [x**2 for x in range(10)][2:]
 
 def test_is_a():
     values_types_right = [

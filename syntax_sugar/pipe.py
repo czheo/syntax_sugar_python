@@ -4,6 +4,7 @@ from multiprocess.pool import ThreadPool, Pool
 
 __all__ = [
     'END',
+    'DEBUG',
     'pipe',
     'each',
     'puts',
@@ -20,11 +21,17 @@ def puts(data, end="\n"):
 def each(fn):
     return partial(map, fn)
 
-class end:
+class End:
     "mark end of pipe"
     pass
 
-END = end()
+END = End()
+
+class Debug:
+    "mark end of pipe for debug"
+    pass
+
+DEBUG = Debug()
 
 class MultiTask:
     def __init__(self, func):
@@ -92,9 +99,15 @@ class pipe:
         self.data = rhs(self.data)
 
     def __or__(self, rhs):
-        if isinstance(rhs, end):
+        if rhs is END:
             # end of pipe
             return self.action(self.data)
+        elif rhs is DEBUG:
+            # debug end of pipe
+            try:
+                return self.action(self.data)
+            except Exception as e:
+                return e
         elif isinstance(rhs, list):
             if len(set(rhs)) != 1:
                 raise SyntaxError('Bad pipe multiprocessing syntax.')

@@ -29,7 +29,7 @@ from functools import partial
 pipe(10) | range | partial(map, lambda x: x**2) | list | print | END
 # put 10 into the pipe and just let data flow.
 # output: [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
-# remember to call END at the end, so the pipe knows you want start the pipe
+# remember to call END at the end
 # NOTE: everything in the middle of the pipe is just normal Python functions
 
 pipe(10) | range | (map, lambda x: x**2) | list | print | END

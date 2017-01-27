@@ -108,12 +108,12 @@ import requests
 
 ### infix function
 ``` python
-from syntax_sugar import is_a, hasattr, to, by, drop
+from syntax_sugar import is_a, has, to, by, drop
 
 1 /is_a/ int
 # equivalent to `isinstance(1, int)`
 
-range(10) /hasattr/ '__iter__'
+range(10) /has/ '__iter__'
 # equivalent to `hasattr(range(10), "__iter__")`
 
 1 /to/ 10

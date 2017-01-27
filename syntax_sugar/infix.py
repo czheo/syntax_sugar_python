@@ -8,7 +8,7 @@ __all__ = [
     'by',
     'INF',
     'NEGINF',
-    'hasattr',
+    'has',
     'take',
     'drop',
 ]
@@ -24,7 +24,7 @@ class infix(partial):
         return infix(self.func, left)
 
 is_a = infix(isinstance)
-hasattr = infix(hasattr)
+has = infix(hasattr)
 
 @infix
 def to(start, end):

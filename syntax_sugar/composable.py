@@ -8,11 +8,11 @@ __all__ = [
 ]
 
 class composable(partial):
-    def __mul__(self, func):
-        return lambda *args, **kwargs: self(func(*args, **kwargs))
+    def __mul__(self, rhs):
+        return lambda *args, **kwargs: self(rhs(*args, **kwargs))
 
-    def __rmul__(self, func):
-        return lambda *args, **kwargs: func(self(*args, **kwargs))
+    def __rmul__(self, lhs):
+        return lambda *args, **kwargs: lhs(self(*args, **kwargs))
 
 def compose(*args):
     return reduce(lambda acc, fn:

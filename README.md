@@ -184,4 +184,19 @@ def push(lst, x):
 # returns [1,2,3]
 ```
 
+### stream
+
+``` python
+from syntax_sugar import stream, take
+
+list(stream() << [1,2,3] << range(5))
+# [1,2,3,0,1,2,3,4]
+# stream will connect all sequences together
+
+list((stream() << [1, 1] << (lambda x, y: x + y)) /take/ 10)
+# [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+# This is the first 10 items of an infinite fibonacci stream
+# If a function is met, it will infinitely take the last N previous items to generate the next item.
+```
+
 More receipes: https://github.com/czheo/syntax_sugar_python/tree/master/recipes

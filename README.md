@@ -183,7 +183,7 @@ def push(lst, x):
 [] /push/ 1 /push/ 2 /push/ 3
 # returns [1,2,3]
 ```
-
+<!---
 ### stream
 
 ``` python
@@ -196,7 +196,7 @@ list(stream() << [1,2,3] << range(5))
 list((stream() << [1, 1] << (lambda x, y: x + y)) /take/ 10)
 # [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
 # This is the first 10 items of an infinite fibonacci stream
-# If a function is met, it will infinitely take the last N previous items to generate the next item.
+# If a function is met, stream will infinitely take the last N previous items as the input of the lambda to generate the next item.
 ```
-
+-->
 More receipes: https://github.com/czheo/syntax_sugar_python/tree/master/recipes

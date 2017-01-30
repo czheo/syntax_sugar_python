@@ -71,7 +71,7 @@ p(20)
 
 By default, pipe works with green threads which is based on event loop.
 
-You can have a function running in a seperate green thread with pipe. Just put it in a `[]` or more explicitly `g[]`. Multithreads or multiprocesses are also available.
+You can have a function running in a seperate green thread with pipe. Just put it in a `[]` or more explicitly `g[]`. Threads and processes are also available.
 
 ``` python
 from syntax_sugar import (green_thread_syntax as g,

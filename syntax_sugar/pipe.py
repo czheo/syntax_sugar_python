@@ -33,43 +33,35 @@ class Debug:
 
 DEBUG = Debug()
 
-class MultiTask:
-    def __init__(self, func):
+class MultiTaskSyntax:
+    def __init__(self):
         self.poolsize = 1
-        self.func = func
     def __mul__(self, other):
         self.poolsize = other
         return self
+    def __getitem__(self, func):
+        self.func = func
+        return self
 
-class MultiProcess(MultiTask):
+class ProcessSyntax(MultiTaskSyntax):
     pass
 
-class MultiThread(MultiTask):
+class ThreadSyntax(MultiTaskSyntax):
     pass
 
-class ProcessSyntax:
-    def __getitem__(self, func):
-        return MultiProcess(func)
-
-class ThreadSyntax:
-    def __getitem__(self, func):
-        return MultiThread(func)
+def multitask(fn, poolsize, data, pool_constructor):
+    with pool_constructor(poolsize) as p:
+        if not hasattr(data, '__iter__'):
+            data= [data]
+            return p.map(fn, data)[0]
+        else:
+            return p.map(fn, data)
 
 def multiprocess(fn, poolsize, data):
-    p = Pool(poolsize)
-    if not hasattr(data, '__iter__'):
-        data= [data]
-        return p.map(fn, data)[0]
-    else:
-        return p.map(fn, data)
+    return multitask(fn, poolsize, data, Pool)
 
 def multithread(fn, poolsize, data):
-    p = ThreadPool(poolsize)
-    if not hasattr(data, '__iter__'):
-        data= [data]
-        return p.map(fn, data)[0]
-    else:
-        return p.map(fn, data)
+    return multitask(fn, poolsize, data, ThreadPool)
 
 process_syntax = p = ProcessSyntax()
 thread_syntax = t = ThreadSyntax()
@@ -114,9 +106,9 @@ class pipe:
             poolsize = len(rhs)
             new_action = rhs[0]
             self.action = compose(partial(multithread, new_action, poolsize), self.action)
-        elif isinstance(rhs, MultiProcess):
+        elif isinstance(rhs, ProcessSyntax):
             self.action = compose(partial(multiprocess, rhs.func, rhs.poolsize), self.action)
-        elif isinstance(rhs, MultiThread):
+        elif isinstance(rhs, ThreadSyntax):
             self.action = compose(partial(multithread, rhs.func, rhs.poolsize), self.action)
         elif isinstance(rhs, tuple):
             self.action = compose(partial(*rhs), self.action)

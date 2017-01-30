@@ -1,6 +1,7 @@
 from functools import partial
 from .composable import compose, composable
 from multiprocess.pool import ThreadPool, Pool
+from eventlet import GreenPool
 
 __all__ = [
     'END',
@@ -10,8 +11,10 @@ __all__ = [
     'puts',
     'process_syntax',
     'thread_syntax',
+    'green_thread_syntax',
     'p',
     't',
+    'g',
 ]
 
 def puts(data, end="\n"):
@@ -49,6 +52,12 @@ class ProcessSyntax(MultiTaskSyntax):
 class ThreadSyntax(MultiTaskSyntax):
     pass
 
+class GreenThreadSyntax(MultiTaskSyntax):
+    pass
+
+class EventSyntax(MultiTaskSyntax):
+    pass
+
 def multitask(fn, poolsize, data, pool_constructor):
     with pool_constructor(poolsize) as p:
         if not hasattr(data, '__iter__'):
@@ -63,8 +72,14 @@ def multiprocess(fn, poolsize, data):
 def multithread(fn, poolsize, data):
     return multitask(fn, poolsize, data, ThreadPool)
 
+def multigreenthread(fn, poolsize, data):
+    p = GreenPool(poolsize)
+    return list(p.imap(fn, data))
+
+
 process_syntax = p = ProcessSyntax()
 thread_syntax = t = ThreadSyntax()
+green_thread_syntax = g = GreenThreadSyntax()
 
 class pipe:
     def __init__(self, data = None):
@@ -110,6 +125,8 @@ class pipe:
             self.action = compose(partial(multiprocess, rhs.func, rhs.poolsize), self.action)
         elif isinstance(rhs, ThreadSyntax):
             self.action = compose(partial(multithread, rhs.func, rhs.poolsize), self.action)
+        elif isinstance(rhs, GreenThreadSyntax):
+            self.action = compose(partial(multigreenthread, rhs.func, rhs.poolsize), self.action)
         elif isinstance(rhs, tuple):
             self.action = compose(partial(*rhs), self.action)
         elif isinstance(rhs, pipe):

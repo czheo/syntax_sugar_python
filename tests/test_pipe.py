@@ -30,11 +30,14 @@ def test_pipe_connect():
 # not all processes in the pool are necessarily used 
 # 
 def test_pipe_multiprocess():
-    assert pipe(range(10)) | p[lambda x: x**2] * 3 | END == [x ** 2 for x in range(10)]
+    assert pipe(100) | range | p[lambda x: x**2] * 3 | sorted | END == [x ** 2 for x in range(100)]
 
 def test_pipe_multithread():
-    assert pipe(range(10)) | [lambda x: x**2] * 3 | END == [x ** 2 for x in range(10)]
-    assert pipe(range(10)) | t[lambda x: x**2] * 3 | END == [x ** 2 for x in range(10)]
+    assert pipe(100) | range | [lambda x: x**2] * 3 | sorted | END == [x ** 2 for x in range(100)]
+    assert pipe(100) | range | t[lambda x: x**2] * 3 | sorted | END == [x ** 2 for x in range(100)]
+
+def test_pipe_multigreenthread():
+    assert pipe(100) | range | g[lambda x: x**2] * 3 | sorted | END == [x ** 2 for x in range(100)]
 
 def test_redirect():
     p = pipe(range(10)) | each(str) | ''.join

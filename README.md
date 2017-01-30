@@ -199,4 +199,63 @@ list((stream() << [1, 1] << (lambda x, y: x + y)) /take/ 10)
 # If a function is met, stream will infinitely take the last N previous items as the input of the lambda to generate the next item.
 ```
 -->
+
+
+### function composition
+
+In math, `(f * g) (x) = f(g(x))`. This is called function composition.
+
+``` python
+# this transfer a map object to list
+lmap = compose(list, map)
+# lmap equivalent to `list(map(...))`
+lmap(lambda x: x ** 2, range(10))
+```
+
+Let's say we want to represent `f * g * h` in a program, i.e. `fn(x) = f(g(h(x)))`
+
+``` python
+f = lambda x: x**2 + 1
+g = lambda x: 2*x - 1
+h = lambda x: -2 * x**3 + 3
+
+fn = compose(f, g, h)
+
+fn(5) # 245026
+```
+
+or you can do
+
+```python
+f = composable(lambda x: x**2 + 1)
+g = composable(lambda x: 2*x - 1)
+h = composable(lambda x: -2 * x**3 + 3)
+
+fn = f * g * h
+
+fn(5) # 245026
+```
+
+Some times you may prefer the decorator way.
+
+``` python
+# make your own composable functions
+@composable
+def add2(x):
+    return x + 2
+
+@composable
+def mul3(x):
+    return x * 3
+
+@composable
+def pow2(x):
+    return x ** 2
+    
+fn = add2 * mul3 * pow2
+# equivalent to `add2(mul3(pow2(n)))`
+fn(5)
+# returns 5^2 * 3 + 2 = 77
+```
+
 More receipes: https://github.com/czheo/syntax_sugar_python/tree/master/recipes

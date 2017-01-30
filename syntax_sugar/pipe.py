@@ -74,7 +74,11 @@ def multithread(fn, poolsize, data):
 
 def multigreenthread(fn, poolsize, data):
     p = GreenPool(poolsize)
-    return list(p.imap(fn, data))
+    if not hasattr(data, '__iter__'):
+        data= [data]
+        return next(p.imap(fn, data))
+    else:
+        return list(p.imap(fn, data))
 
 
 process_syntax = p = ProcessSyntax()

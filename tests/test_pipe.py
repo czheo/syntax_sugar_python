@@ -33,11 +33,11 @@ def test_pipe_multiprocess():
     assert pipe(100) | range | p[lambda x: x**2] * 3 | sorted | END == [x ** 2 for x in range(100)]
 
 def test_pipe_multithread():
-    assert pipe(100) | range | [lambda x: x**2] * 3 | sorted | END == [x ** 2 for x in range(100)]
     assert pipe(100) | range | t[lambda x: x**2] * 3 | sorted | END == [x ** 2 for x in range(100)]
 
 def test_pipe_multigreenthread():
-    assert pipe(100) | range | g[lambda x: x**2] * 3 | sorted | END == [x ** 2 for x in range(100)]
+    assert pipe(10000) | range | [lambda x: x**2] * 10000 | sorted | END == [x ** 2 for x in range(10000)]
+    assert pipe(10000) | range | g[lambda x: x**2] * 10000 | sorted | END == [x ** 2 for x in range(10000)]
 
 def test_redirect():
     p = pipe(range(10)) | each(str) | ''.join

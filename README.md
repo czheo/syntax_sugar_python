@@ -67,24 +67,27 @@ p(20)
 # returns 36
 ```
 
-### pipe with thread/process and multiprocessing
+### pipe with parallelism
 
-You can have a function running in a seperate thread with pipe. Just put it in a `[]` or more explicitly `t[]`.
+By default, pipe works with green threads which is based on event loop.
 
-Because of the notorious GIL(Global Interpret Lock) of Python, people may want processes instead of threads. Just put a function in `p[]`.
+You can have a function running in a seperate green thread with pipe. Just put it in a `[]` or more explicitly `g[]`. Multithreads or multiprocesses are also available.
 
 ``` python
-from syntax_sugar import thread_syntax as t, process_syntax as p
+from syntax_sugar import (green_thread_syntax as g,
+                          thread_syntax as t,
+                          process_syntax as p)
 
-pipe(10) | [print] | END   # print run in a thread
+pipe(10) | [print] | END   # print run in a green thread
+pipe(10) | g[print] | END  # print run in a green thread
 pipe(10) | t[print] | END  # print run in a thread
 pipe(10) | p[print] | END  # print run in a process
 ```
 
-What makes this syntax good is that you can specify how many threads you want to spawn, by doing `[function] * n` where `n` is the number of threads.
+What makes this syntax good is that you can specify how many green threads you want to spawn, by doing `[function] * n` where `n` is the number of green threads.
 
 ``` python
-pipe([1,2,3,4,5]) | [print] * 3 | END # print will run in a ThreadPool of size 3
+pipe([1,2,3,4,5]) | [print] * 3 | END # print will run in a GreenThreadPool of size 3
 ```
 
 Here is an example of requesting a list of urls in parallel
@@ -93,7 +96,7 @@ Here is an example of requesting a list of urls in parallel
 import requests
 (pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
     | each(lambda name: 'http://' + name + '.com')
-    | [requests.get] * 3   # !! `requests.get` runs in a ThreadPool of size 3
+    | [requests.get] * 3   # !! `requests.get` runs in a GreenThreadPool of size 3
     | each(lambda resp: (resp.url, resp.headers.get('Server')))
     | list
     | END)

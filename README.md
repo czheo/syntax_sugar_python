@@ -150,7 +150,7 @@ range(10) /has/ '__iter__'
 - support pipe.
 
 ``` python
-from syntax_sugar import INF, NEGINF, take, each
+from syntax_sugar import INF, take, each
 
 # CAUTION: this will infinitely print numbers
 for i in 1 /to/ INF:
@@ -160,7 +160,11 @@ list(1 /to/ INF /take/ 5)
 # there is a `take` functon which is similar to itertools.islice
 # return [1, 2, 3, 4, 5]
 
+<<<<<<< HEAD
 list(0 /to/ NEGINF /step/ 2 /take/ 5)
+=======
+list(0 /to/ -INF /by/ 2 /take/ 5)
+>>>>>>> 8d9979391206cfdf63a5decf720bfd1c31549685
 # also works with negative infinity.
 # return [0, -2, -4, -6, -8]
 

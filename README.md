@@ -160,7 +160,7 @@ list(1 /to/ INF /take/ 5)
 # there is a `take` functon which is similar to itertools.islice
 # return [1, 2, 3, 4, 5]
 
-list(0 /to/ -INF /by/ 2 /take/ 5)
+list(0 /to/ -INF /step/ 2 /take/ 5)
 # also works with negative infinity.
 # return [0, -2, -4, -6, -8]
 

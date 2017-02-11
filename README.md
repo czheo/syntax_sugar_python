@@ -111,7 +111,7 @@ import requests
 
 ### infix function
 ``` python
-from syntax_sugar import is_a, has, to, by, drop
+from syntax_sugar import is_a, has, to, step, drop
 
 1 /is_a/ int
 # equivalent to `isinstance(1, int)`
@@ -129,11 +129,11 @@ range(10) /has/ '__iter__'
 '0' /to/ '9'
 # We can also have a range of characters :)
 
-1 /to/ 10 /by/ 2
+1 /to/ 10 /step/ 2
 # We can also specify step sizes.
 # Similar to `range(1, 11, 2)`
 
-10 /to/ 1 /by/ 2
+10 /to/ 1 /step/ 2
 # Go backward.
 # Similar to `range(10, 0, -2)`
 
@@ -160,7 +160,7 @@ list(1 /to/ INF /take/ 5)
 # there is a `take` functon which is similar to itertools.islice
 # return [1, 2, 3, 4, 5]
 
-list(0 /to/ NEGINF /by/ 2 /take/ 5)
+list(0 /to/ NEGINF /step/ 2 /take/ 5)
 # also works with negative infinity.
 # return [0, -2, -4, -6, -8]
 

@@ -19,18 +19,18 @@ def test_int_to_int():
         _assert_iter(start /to/ end, range(start, end - 1, -1))
 
 def test_int_to_int_with_step():
-    _assert_iter(1 /to/ 1 /by/ 2, [1])
-    _assert_iter(2 /to/ 1 /by/ 2, [2])
+    _assert_iter(1 /to/ 1 /step/ 2, [1])
+    _assert_iter(2 /to/ 1 /step/ 2, [2])
     for i in range(100):
         start, end = random.randint(1, 1e3), random.randint(1, 1e3)
-        step = random.randint(1, 10)
+        s = random.randint(1, 10)
         end += start
-        _assert_iter(start /to/ end /by/ step, range(start, end + 1, step))
-        _assert_iter(start /to/ end /by/ -step, range(start, end + 1, step))
+        _assert_iter(start /to/ end /step/ s, range(start, end + 1, s))
+        _assert_iter(start /to/ end /step/ -s, range(start, end + 1, s))
 
         start, end = end, start
-        _assert_iter(start /to/ end /by/ -step, range(start, end - 1, -step))
-        _assert_iter(start /to/ end /by/ step, range(start, end - 1, -step))
+        _assert_iter(start /to/ end /step/ -s, range(start, end - 1, -s))
+        _assert_iter(start /to/ end /step/ s, range(start, end - 1, -s))
 
 def test_str_to_str():
     _assert_iter('A' /to/ 'Z', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ')
@@ -42,20 +42,20 @@ def test_str_to_str():
     _assert_iter('v' /to/ 'd', 'vutsrqponmlkjihgfed')
 
 def test_str_to_str_with_step():
-    _assert_iter('A' /to/ 'Z' /by/ 3, 'ADGJMPSVY')
-    _assert_iter('A' /to/ 'Z' /by/ -3, 'ADGJMPSVY')
-    _assert_iter('Z' /to/ 'A' /by/ -3, 'ZWTQNKHEB')
-    _assert_iter('Z' /to/ 'A' /by/ 3, 'ZWTQNKHEB')
-    _assert_iter('a' /to/ 'z' /by/ 4, 'aeimquy')
-    _assert_iter('a' /to/ 'z' /by/ -4, 'aeimquy')
-    _assert_iter('z' /to/ 'a' /by/ -4, 'zvrnjfb')
-    _assert_iter('z' /to/ 'a' /by/ 4, 'zvrnjfb')
-    _assert_iter('D' /to/ 'V' /by/ 5, 'DINS')
-    _assert_iter('D' /to/ 'V' /by/ -5, 'DINS')
-    _assert_iter('V' /to/ 'D' /by/ -5, 'VQLG')
-    _assert_iter('V' /to/ 'D' /by/ 5, 'VQLG')
-    _assert_iter('v' /to/ 'd' /by/ -3, 'vspmjgd')
-    _assert_iter('v' /to/ 'd' /by/ 3, 'vspmjgd')
+    _assert_iter('A' /to/ 'Z' /step/ 3, 'ADGJMPSVY')
+    _assert_iter('A' /to/ 'Z' /step/ -3, 'ADGJMPSVY')
+    _assert_iter('Z' /to/ 'A' /step/ -3, 'ZWTQNKHEB')
+    _assert_iter('Z' /to/ 'A' /step/ 3, 'ZWTQNKHEB')
+    _assert_iter('a' /to/ 'z' /step/ 4, 'aeimquy')
+    _assert_iter('a' /to/ 'z' /step/ -4, 'aeimquy')
+    _assert_iter('z' /to/ 'a' /step/ -4, 'zvrnjfb')
+    _assert_iter('z' /to/ 'a' /step/ 4, 'zvrnjfb')
+    _assert_iter('D' /to/ 'V' /step/ 5, 'DINS')
+    _assert_iter('D' /to/ 'V' /step/ -5, 'DINS')
+    _assert_iter('V' /to/ 'D' /step/ -5, 'VQLG')
+    _assert_iter('V' /to/ 'D' /step/ 5, 'VQLG')
+    _assert_iter('v' /to/ 'd' /step/ -3, 'vspmjgd')
+    _assert_iter('v' /to/ 'd' /step/ 3, 'vspmjgd')
 
 def test_infinity():
     with raises(ValueError):
@@ -67,11 +67,11 @@ def test_infinity():
     _assert_iter(1 /to/ INF /take/ 10, range(1, 11))
     _assert_iter(1 /to/ NEGINF /take/ 10, range(1, -9, -1))
 
-    _assert_iter(1 /to/ INF /by/ 2 /take/ 10, list(range(1, 100, 2))[:10])
-    _assert_iter(1 /to/ NEGINF /by/ 2 /take/ 10, list(range(1, -100, -2))[:10])
+    _assert_iter(1 /to/ INF /step/ 2 /take/ 10, list(range(1, 100, 2))[:10])
+    _assert_iter(1 /to/ NEGINF /step/ 2 /take/ 10, list(range(1, -100, -2))[:10])
 
-    _assert_iter(1 /to/ NEGINF /by/ 2 /take/ 10 /drop/ 2, list(range(1, -100, -2))[2:10])
-    _assert_iter(1 /to/ NEGINF /by/ 2 /drop/ 5 /take/ 3, [-9, -11, -13])
+    _assert_iter(1 /to/ NEGINF /step/ 2 /take/ 10 /drop/ 2, list(range(1, -100, -2))[2:10])
+    _assert_iter(1 /to/ NEGINF /step/ 2 /drop/ 5 /take/ 3, [-9, -11, -13])
 
 
 def test_take():

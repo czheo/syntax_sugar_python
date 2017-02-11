@@ -5,7 +5,7 @@ __all__ = [
     'infix',
     'is_a',
     'to',
-    'by',
+    'step',
     'INF',
     'NEGINF',
     'has',
@@ -31,7 +31,7 @@ def to(start, end):
     return Iterator(Range(start, end))
 
 @infix
-def by(obj, step):
+def step(obj, step):
     # ex. -2 step -> 2 step
     step = abs(step)
     obj = Iterator(obj) if not obj /is_a/ Iterator else obj

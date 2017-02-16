@@ -1,6 +1,6 @@
 # syntax_sugar [![travis_status](https://travis-ci.org/czheo/syntax_sugar_python.svg?branch=master)](https://travis-ci.org/czheo/syntax_sugar_python) [![PyPI](https://img.shields.io/pypi/v/syntax_sugar.svg)](https://pypi.python.org/pypi/syntax_sugar)
 
-This lib adds some fake "syntactic sugar" to Python.
+This lib adds some anti-Pythonic "syntactic sugar" to Python.
 
 NOTE: This is merely an experimental prototype to show some potential of operator overloading in Python. Only tested under Python 3.6.0. Anything may evolve without announcement in advance.
 

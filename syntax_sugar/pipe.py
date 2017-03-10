@@ -2,6 +2,7 @@ from functools import partial
 from .composable import compose, composable
 from multiprocess.pool import ThreadPool, Pool
 from eventlet import GreenPool
+from multiprocess import cpu_count
 
 __all__ = [
     'END',
@@ -47,7 +48,8 @@ class MultiTaskSyntax:
         return self
 
 class ProcessSyntax(MultiTaskSyntax):
-    pass
+    def __init__(self):
+        self.poolsize = cpu_count()
 
 class ThreadSyntax(MultiTaskSyntax):
     pass

@@ -124,7 +124,7 @@ class pipe:
                 raise SyntaxError('Bad pipe multiprocessing syntax.')
             poolsize = len(rhs)
             new_action = rhs[0]
-            self.action = compose(partial(multigreenthread, new_action, poolsize), self.action)
+            self.action = compose(partial(multithread, new_action, poolsize), self.action)
         elif isinstance(rhs, ProcessSyntax):
             self.action = compose(partial(multiprocess, rhs.func, rhs.poolsize), self.action)
         elif isinstance(rhs, ThreadSyntax):

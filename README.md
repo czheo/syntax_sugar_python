@@ -69,25 +69,23 @@ p(20)
 
 ### pipe with parallelism
 
-By default, pipe works with green threads which is based on event loop.
+By default, pipe works with threads which is based on event loop.
 
-You can have a function running in a seperate green thread with pipe. Just put it in a `[]` or more explicitly `g[]`. Threads and processes are also available.
+You can have a function running in a seperate thread with pipe. Just put it in a `[]` or more explicitly `t[]`. Threads and processes are also available.
 
 ``` python
-from syntax_sugar import (green_thread_syntax as g,
-                          thread_syntax as t,
+from syntax_sugar import (thread_syntax as t,
                           process_syntax as p)
 
-pipe(10) | [print] | END   # print run in a green thread
-pipe(10) | g[print] | END  # print run in a green thread
+pipe(10) | [print] | END   # print run in a thread
 pipe(10) | t[print] | END  # print run in a thread
 pipe(10) | p[print] | END  # print run in a process
 ```
 
-What makes this syntax good is that you can specify how many green threads you want to spawn, by doing `[function] * n` where `n` is the number of green threads.
+What makes this syntax good is that you can specify how many threads you want to spawn, by doing `[function] * n` where `n` is the number of threads.
 
 ``` python
-pipe([1,2,3,4,5]) | [print] * 3 | END # print will run in a GreenThreadPool of size 3
+pipe([1,2,3,4,5]) | [print] * 3 | END # print will run in a ThreadPool of size 3
 ```
 
 Here is an example of requesting a list of urls in parallel
@@ -96,7 +94,7 @@ Here is an example of requesting a list of urls in parallel
 import requests
 (pipe(['google', 'twitter', 'yahoo', 'facebook', 'github'])
     | each(lambda name: 'http://' + name + '.com')
-    | [requests.get] * 3   # !! `requests.get` runs in a GreenThreadPool of size 3
+    | [requests.get] * 3   # !! `requests.get` runs in a ThreadPool of size 3
     | each(lambda resp: (resp.url, resp.headers.get('Server')))
     | list
     | END)

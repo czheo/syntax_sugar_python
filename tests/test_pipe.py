@@ -44,7 +44,6 @@ def test_pipe_multigreenthread():
     assert pipe(10) | [lambda x: x**2] * 2 | END == 10**2
     assert pipe(10) | g[lambda x: x**2] | END == 10**2
     assert pipe(10) | g[lambda x: x**2] * 2 | END == 10**2
-    assert pipe(10000) | range | [lambda x: x**2] * 10000 | sorted | END == [x ** 2 for x in range(10000)]
     assert pipe(10000) | range | g[lambda x: x**2] * 10000 | sorted | END == [x ** 2 for x in range(10000)]
 
 def test_redirect():

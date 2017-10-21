@@ -6,6 +6,10 @@ NOTE: This is merely an experimental prototype to show some potential of operato
 
 Inspired by https://github.com/matz/streem. 
 
+Also, you can watch the last part of this Matz's talk to understand the intuition behind this project.
+
+[![Stream Model](https://img.youtube.com/vi/48iKjUcENRE/0.jpg)](https://youtu.be/48iKjUcENRE?t=39m29s)
+
 # Install
 ```
 pip install syntax_sugar

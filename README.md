@@ -73,7 +73,7 @@ p(20)
 
 ### pipe with parallelism
 
-By default, pipe works with threads which is based on event loop.
+By default, pipe works with threads.
 
 You can have a function running in a seperate thread with pipe. Just put it in a `[]` or more explicitly `t[]`. Threads and processes are also available.
 

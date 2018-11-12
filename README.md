@@ -241,7 +241,7 @@ fn = f * g * h
 fn(5) # 245026
 ```
 
-Some times you may prefer the decorator way.
+Sometimes you may prefer the decorator way.
 
 ``` python
 # make your own composable functions

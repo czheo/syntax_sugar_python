@@ -211,9 +211,8 @@ list((stream() << [1, 1] << (lambda x, y: x + y)) /take/ 10)
 In math, `(f * g) (x) = f(g(x))`. This is called function composition.
 
 ``` python
-# this transfer a map object to list
-lmap = compose(list, map)
 # lmap equivalent to `list(map(...))`
+lmap = compose(list, map)
 lmap(lambda x: x ** 2, range(10))
 ```
 

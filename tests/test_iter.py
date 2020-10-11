@@ -1,5 +1,8 @@
 from pytest import raises
 from syntax_sugar.iter import Range, Iterator
+from syntax_sugar.infix import take, to, INF
+from itertools import product
+
 
 def test_range_bad_step():
     range_obj = Range(1, 2)
@@ -21,3 +24,4 @@ def test_iterator():
     assert list(Iterator(Range(1, 10))) == list(range(1, 11))
     assert list(Iterator(range(1, 10))) == list(range(1, 10))
     assert list(Iterator([1,2,3,4])) == [1,2,3,4]
+    assert list((1 /to/ INF) * (2 /to/ 4) /take/ 5) == list(product([1,2,3], [2,3,4]))[:5]

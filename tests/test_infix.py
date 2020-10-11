@@ -1,7 +1,7 @@
 from pytest import raises
 import random
 from syntax_sugar import *
-from syntax_sugar.iter import Iterator
+from syntax_sugar._iter import Iterator
 
 def _assert_iter(expr, expected):
     assert expr /is_a/ Iterator == True

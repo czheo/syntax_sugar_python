@@ -1,4 +1,4 @@
-from syntax_sugar.pipe import *
+from syntax_sugar._pipe import *
 from functools import partial, reduce
 import os
 

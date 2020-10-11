@@ -1,4 +1,4 @@
-from .pipe import pipe
+from ._pipe import pipe
 from itertools import tee, islice
 
 INF = float('inf')

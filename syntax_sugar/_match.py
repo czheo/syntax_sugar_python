@@ -1,4 +1,4 @@
-from .pipe import END
+from ._pipe import END
 
 __all__ = [
     'match',

@@ -1,5 +1,5 @@
 from functools import partial
-from .composable import compose, composable
+from ._composable import compose, composable
 from multiprocess.pool import ThreadPool, Pool
 from eventlet import GreenPool
 

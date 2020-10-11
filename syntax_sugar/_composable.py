@@ -1,6 +1,6 @@
 from functools import partial
 from functools import reduce
-from .infix import infix
+from ._infix import infix
 
 
 __all__ = [

@@ -1,5 +1,5 @@
-from .infix import infix
-from .iter import Iterator, Range
+from ._infix import infix
+from ._iter import Iterator, Range
 
 __all__ = [
     'flip',

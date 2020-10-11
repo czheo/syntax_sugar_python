@@ -1,7 +1,5 @@
 language: python
 python:
-# - '2.7'
-# - '3.3'
 - '3.6'
 install: pip install .
 script: python setup.py pytest
@@ -9,7 +7,7 @@ deploy:
   provider: pypi
   user: czheo
   password:
-    secure: RzUUDwN4xC7T+7p2hHm5cwIS1Mbd7r56/ayZNfNbhVshOJghwVUDq8W0d9xFl2tdxTHwWlgIPsyo1FUqoiWjuziro3ud5VXzsB95OIYip/Eh4U6+/qw9v2QdLkSiQrSK9NRQyZ0X9wRdWFqp3GqX88cRaJ9tTAISfZhNoCuy+nrouajAZ3jtgJxe+N3b9gGsJDOCEYGHcnpSqo6Ev15OhfY7910LbiGI6cd4dp3SkTWLlutdghWDbMnIvMygNUaFUSLU2xW11MBXHiJqT3ct8hSnZkf5gO7bOMOGgjk4mG1PDapEoJiaZv7AF7sW/ZXo67XUsxWWBZ0ZedvtofPFX1sPizP7GTx59ORzuIiIcvLZiMIjUxbkvSjFthtjElK9FZVkBUk/ophJsRB9j+r7Kasun8CPMy38X15vQH6TuD4aHN6iiS2KkuyymDofbDgmjKkAP+F7ewdrntdViMVSFLri4bWl+WalTp0T0qCdNqH/37Q3F+2Mycf2ECH1dyLMM0BtqBJ7iGvYLRWRir6RLYh7CkBfeQ4hCPm4nQukDk//Pr/sfzD+peEawPvSvsYgo9J4ucHRuMw5/eDUCGdzyc5fntvIcY5PDA1CBU8jO0dDucNhbg0+9603RriQUrvbh9BDPkT0hZDcU7ElFdAydKEX24ZdCoMjwo2VDJcs1Dk=
+    secure: nf6zMORRla402yZpynyqnM7FHSFFg7DaTVaXV5857ZefPn0DM2r+5ZVoMqC/nAHeWygI+jRzmwORpOyviMcWSQRmWDTldKf9iddSw74e9jkgB+uDNoiVylVWhKSOzmQfZtEBfWFeBpnx8Vr60xp1l/fbYxmfHETkxwKFfQLAKPKnbEQMiFm7DUxPlXYuVmvEt7EL0xHd197KHAODFMHbcW/lLfgbjylgsVcpwC74sfmjaLRrzD5Y2NupCmjaJFtkgoWUhvU58vRRbu2M+lI4YpMCs8Ioi00o0KvOaoPnEho9pLsFNg8mbL0alZFLcWPOB0srb+XKhRWUSzv6Dd8SmYfO4U/Z6qrxN3lg0L59xuEeDAPN6WI60epVEf8YrMeJX6+yL2I82WeWHS3jim9RBLyxx8x2CbgCayP4U8Fhxt4vEtDUEOmh9fvtg2YRRbVpYjQQMutww+h9IinLh7NAkgujnylCu689JmsM7Mlhgh2bDYTTdx6i5LhPc2f4/+DmNmeNTmetL3WBe1xHFxnv5uX1d3FqH8nDKknEuDtfPXxZvAp+nr1FIS52b/4esNDMyZaD+x387X+TKRjQJ/3nWVBgQXGzSHsQ14J8ff2o63031lA1M/vlFUbS/c+ENaI2mCTAlzrXt/5XgvWYc3ewkoAEwTTc6hJvPhbxVWGy1Fk=
   on:
     tags: true
     distributions: sdist bdist_wheel

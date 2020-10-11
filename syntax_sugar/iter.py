@@ -1,5 +1,5 @@
 from .pipe import pipe
-from itertools import product, islice
+from itertools import tee, islice
 
 INF = float('inf')
 NEGINF = float('-inf')
@@ -18,15 +18,18 @@ class Iterator:
         return self
 
     def __mul__(self, rhs):
-        self.data = product(self, rhs)
-        return self
+        def product(rhs):
+            for e1 in self:
+                rhs, rhs_copy = tee(rhs)
+                for e2 in rhs_copy:
+                    yield (e1, e2)
+        return Iterator(product(rhs))
 
     def __next__(self):
         return next(self.data)
 
     def slice(self, start=0, stop=None, step=1):
-        self.data = islice(self.data, start, stop, step)
-        return self
+        return Iterator(islice(self.data, start, stop, step))
 
 class Range:
     def __init__(self, start, end):

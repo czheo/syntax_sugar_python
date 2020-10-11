@@ -191,7 +191,7 @@ def push(lst, x):
 
 You can also do
 
-```
+``` python
 def push(lst, x):
     lst.append(x)
     return lst

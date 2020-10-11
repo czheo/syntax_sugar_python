@@ -112,3 +112,6 @@ def test_is_a():
     for value, types in values_types_wrong:
         for type in types:
             assert not value /is_a/ type
+
+def test_as_a():
+    assert 1 /as_a/ str == '1'

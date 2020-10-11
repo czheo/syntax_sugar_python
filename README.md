@@ -158,15 +158,15 @@ from syntax_sugar import INF, take, each
 for i in 1 /to/ INF:
     print(i)
 
-list(1 /to/ INF /take/ 5)
+1 /to/ INF /take/ 5 /as_a/ list
 # there is a `take` functon which is similar to itertools.islice
 # return [1, 2, 3, 4, 5]
 
-list(0 /to/ -INF /step/ 2 /take/ 5)
+0 /to/ -INF /step/ 2 /take/ 5 /as_a/ list
 # also works with negative infinity.
 # return [0, -2, -4, -6, -8]
 
-list((1 /to/ 3) * (4 /to/ 6))
+(1 /to/ 3) * (4 /to/ 6) /as_a/ list
 # all combinations of [1..3] * [4..6]
 # return [(1, 4), (1, 5), (1, 6), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6)]
 
@@ -188,6 +188,20 @@ def push(lst, x):
 [] /push/ 1 /push/ 2 /push/ 3
 # returns [1,2,3]
 ```
+
+You can also do
+
+```
+def push(lst, x):
+    lst.append(x)
+    return lst
+
+ipush = push /as_a/ infix
+
+[] /ipush/ 1 /ipush/ 2 /ipush/ 3
+# returns [1,2,3]
+```
+
 <!---
 ### stream
 

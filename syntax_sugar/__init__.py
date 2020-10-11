@@ -5,3 +5,4 @@ from ._infix import *
 from ._stream import *
 from ._placeholder import *
 from ._match import *
+from ._iter import *

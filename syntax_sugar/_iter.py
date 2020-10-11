@@ -1,8 +1,11 @@
 from ._pipe import pipe
 from itertools import tee, islice
 
+__all__ = [
+    'INF',
+]
+
 INF = float('inf')
-NEGINF = float('-inf')
 
 class Iterator:
     def __init__(self, data):
@@ -33,11 +36,14 @@ class Iterator:
 
 class Range:
     def __init__(self, start, end):
-        if start in {INF, NEGINF}:
+        if start in {INF, -INF}:
             raise ValueError('Cannot start range from infinity')
 
+        if end == Ellipsis:
+            end = INF
+
         valid_char = lambda c: isinstance(c, str) and len(c) == 1
-        valid_integer = lambda i: isinstance(i, int) or i == INF or i == NEGINF
+        valid_integer = lambda i: isinstance(i, int) or i == INF or i == -INF
 
         if valid_integer(start) and valid_integer(end):
             self.type = 'number'

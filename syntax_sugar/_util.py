@@ -7,13 +7,10 @@ __all__ = [
     'as_a',
     'to',
     'step',
-    'INF',
     'has',
     'take',
     'drop',
 ]
-
-INF = float('inf')
 
 def flip(fn):
     def wrapper(*args):

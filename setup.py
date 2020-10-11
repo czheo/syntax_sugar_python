@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="syntax_sugar",
-    version="0.3.4",
+    version="0.3.5",
     url='https://github.com/czheo/syntax_sugar_python',
     description="add syntactic sugar to Python",
     author="czheo",

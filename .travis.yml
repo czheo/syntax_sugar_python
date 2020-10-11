@@ -14,3 +14,4 @@ deploy:
     tags: true
     distributions: sdist bdist_wheel
     repo: czheo/syntax_sugar_python
+    python: 3.6

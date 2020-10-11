@@ -1,6 +1,6 @@
 from pytest import raises
 from syntax_sugar.iter import Range, Iterator
-from syntax_sugar.infix import take, to, INF
+from syntax_sugar.util import take, to, INF
 from itertools import product
 
 

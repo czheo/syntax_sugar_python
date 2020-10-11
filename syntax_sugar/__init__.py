@@ -5,4 +5,3 @@ from .infix import *
 from .stream import *
 from .placeholder import *
 from .match import *
-from eventlet import green

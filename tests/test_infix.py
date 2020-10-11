@@ -62,16 +62,16 @@ def test_infinity():
         INF /to/ 100
 
     with raises(ValueError):
-        NEGINF /to/ 1
+        -INF /to/ 1
 
     _assert_iter(1 /to/ INF /take/ 10, range(1, 11))
-    _assert_iter(1 /to/ NEGINF /take/ 10, range(1, -9, -1))
+    _assert_iter(1 /to/ -INF /take/ 10, range(1, -9, -1))
 
     _assert_iter(1 /to/ INF /step/ 2 /take/ 10, list(range(1, 100, 2))[:10])
-    _assert_iter(1 /to/ NEGINF /step/ 2 /take/ 10, list(range(1, -100, -2))[:10])
+    _assert_iter(1 /to/ -INF /step/ 2 /take/ 10, list(range(1, -100, -2))[:10])
 
-    _assert_iter(1 /to/ NEGINF /step/ 2 /take/ 10 /drop/ 2, list(range(1, -100, -2))[2:10])
-    _assert_iter(1 /to/ NEGINF /step/ 2 /drop/ 5 /take/ 3, [-9, -11, -13])
+    _assert_iter(1 /to/ -INF /step/ 2 /take/ 10 /drop/ 2, list(range(1, -100, -2))[2:10])
+    _assert_iter(1 /to/ -INF /step/ 2 /drop/ 5 /take/ 3, [-9, -11, -13])
 
 
 def test_take():

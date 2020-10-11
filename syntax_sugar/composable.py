@@ -1,10 +1,12 @@
 from functools import partial
 from functools import reduce
+from .infix import infix
 
 
 __all__ = [
     'composable',
     'compose',
+    'o',
 ]
 
 class composable(partial):
@@ -14,7 +16,10 @@ class composable(partial):
     def __rmul__(self, lhs):
         return lambda *args, **kwargs: lhs(self(*args, **kwargs))
 
+@infix
 def compose(*args):
     return reduce(lambda acc, fn:
         (lambda *ag, **kwag: acc(fn(*ag, **kwag))),
     args)
+
+o = compose

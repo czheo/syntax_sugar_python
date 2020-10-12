@@ -165,6 +165,9 @@ for i in 1 /to/ INF:
 # there is a `take` functon which is similar to itertools.islice
 # return [1, 2, 3, 4, 5]
 
+1 /to/ ... /take/ 5 /as_a/ list
+# ... is equivalent to INF
+
 0 /to/ -INF /step/ 2 /take/ 5 /as_a/ list
 # also works with negative infinity.
 # return [0, -2, -4, -6, -8]

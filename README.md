@@ -118,6 +118,9 @@ from syntax_sugar import is_a, has, to, step, drop
 1 /is_a/ int
 # equivalent to `isinstance(1, int)`
 
+1 /as_a/ str
+# "1"
+
 range(10) /has/ '__iter__'
 # equivalent to `hasattr(range(10), "__iter__")`
 

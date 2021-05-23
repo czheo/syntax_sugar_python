@@ -65,8 +65,12 @@ p3 = pipe() | int | range | sum
 p1 | p2 | p3 | END
 # returns 6
 
-# you can also put a different value in the pipe
+
 p = p1 | p2 | p3
+p()
+# You can invoke the pipe by calling it as a function
+
+# you can also put a different value in the pipe
 p(20)
 # returns 36
 ```

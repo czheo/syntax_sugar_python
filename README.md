@@ -41,8 +41,8 @@ pipe(10) | range | (map, lambda x: x**2) | list | print | END
 
 from syntax_sugar import each
 x = pipe(10) | range | each(lambda x: x ** 2) | END
-# `each` is just a shortcut of the partial function of `map`
-# We can also save the result in a variable
+# We can also save the result in a variable.
+# `each` is an eager evaluated version of the partial function of `map`, which returns a list instead of a map object. (Equivalent to `map` in Python 2)
 
 pipe(10) | range | each(str) | ''.join > 'test.txt'
 # wanna write to a file? Why not!

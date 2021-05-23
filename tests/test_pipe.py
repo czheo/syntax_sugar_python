@@ -9,7 +9,7 @@ def test_pipe_with_list():
     assert pipe([1,2,3,4]) | END == [1,2,3,4]
 
 def test_each():
-    assert pipe(range(10)) | each(lambda x: x**2) | list | END \
+    assert pipe(range(10)) | each(lambda x: x**2) | END \
         == [x**2 for x in range(10)]
 
 def test_puts():

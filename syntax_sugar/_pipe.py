@@ -22,7 +22,7 @@ def puts(data, end="\n"):
     return data
 
 def each(fn):
-    return partial(map, fn)
+    return compose(list, partial(map, fn))
 
 class End:
     "mark end of pipe"

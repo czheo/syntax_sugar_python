@@ -180,7 +180,7 @@ for i in 1 /to/ INF:
 # all combinations of [1..3] * [4..6]
 # return [(1, 4), (1, 5), (1, 6), (2, 4), (2, 5), (2, 6), (3, 4), (3, 5), (3, 6)]
 
-1 /to/ 10 /take/ 5 | each(lambda x: x **2) | list | END
+1 /to/ 10 /take/ 5 | each(lambda x: x **2) | END
 # These infix functions can also be piped.
 # [1, 4, 9, 16, 25]
 ```
